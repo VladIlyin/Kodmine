@@ -1,0 +1,69 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <UserSecretsId>aspnet-Kodmine-9D5B5C26-F4D9-43C0-8F18-625930673BA0</UserSecretsId>
+    <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Data\Migrations\**" />
+    <Content Remove="Data\Migrations\**" />
+    <EmbeddedResource Remove="Data\Migrations\**" />
+    <None Remove="Data\Migrations\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Data\ApplicationDbContext.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.2" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.1" PrivateAssets="All" />
+  </ItemGroup>
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.1" />
+    <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0" />
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Pages\About.cshtml" />
+    <None Include="Pages\Account\AccessDenied.cshtml" />
+    <None Include="Pages\Account\ConfirmEmail.cshtml" />
+    <None Include="Pages\Account\ExternalLogin.cshtml" />
+    <None Include="Pages\Account\ForgotPassword.cshtml" />
+    <None Include="Pages\Account\ForgotPasswordConfirmation.cshtml" />
+    <None Include="Pages\Account\Lockout.cshtml" />
+    <None Include="Pages\Account\Login.cshtml" />
+    <None Include="Pages\Account\LoginWith2fa.cshtml" />
+    <None Include="Pages\Account\LoginWithRecoveryCode.cshtml" />
+    <None Include="Pages\Account\Manage\ChangePassword.cshtml" />
+    <None Include="Pages\Account\Manage\Disable2fa.cshtml" />
+    <None Include="Pages\Account\Manage\EnableAuthenticator.cshtml" />
+    <None Include="Pages\Account\Manage\ExternalLogins.cshtml" />
+    <None Include="Pages\Account\Manage\GenerateRecoveryCodes.cshtml" />
+    <None Include="Pages\Account\Manage\Index.cshtml" />
+    <None Include="Pages\Account\Manage\ResetAuthenticator.cshtml" />
+    <None Include="Pages\Account\Manage\SetPassword.cshtml" />
+    <None Include="Pages\Account\Manage\TwoFactorAuthentication.cshtml" />
+    <None Include="Pages\Account\Manage\_Layout.cshtml" />
+    <None Include="Pages\Account\Manage\_ManageNav.cshtml" />
+    <None Include="Pages\Account\Manage\_StatusMessage.cshtml" />
+    <None Include="Pages\Account\Manage\_ViewImports.cshtml" />
+    <None Include="Pages\Account\Register.cshtml" />
+    <None Include="Pages\Account\ResetPassword.cshtml" />
+    <None Include="Pages\Account\ResetPasswordConfirmation.cshtml" />
+    <None Include="Pages\Account\SignedOut.cshtml" />
+    <None Include="Pages\Account\_ViewImports.cshtml" />
+    <None Include="Pages\Contact.cshtml" />
+    <None Include="Pages\Error.cshtml" />
+    <None Include="Pages\Index.cshtml" />
+    <None Include="Pages\_Layout.cshtml" />
+    <None Include="Pages\_LoginPartial.cshtml" />
+    <None Include="Pages\_ValidationScriptsPartial.cshtml" />
+    <None Include="Pages\_ViewImports.cshtml" />
+    <None Include="Pages\_ViewStart.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Kodmine.Core\Kodmine.Core.csproj" />
+    <ProjectReference Include="..\Kodmine.DAL\Kodmine.DAL.csproj" />
+    <ProjectReference Include="..\Kodmine.Model\Kodmine.Model.csproj" />
+  </ItemGroup>
+</Project>

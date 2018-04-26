@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Kodmine.Model.Models.Tag>
+@{
+    ViewData["Title"] = "Tag";
+}
+
+<br />
+<a asp-controller="Tag" asp-action="Create"><button type="button" class="btn btn-primary">Добавить</button></a>
+<br />
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Название</th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+
+        <tr>
+            <th scope="row">@item.TagId</th>
+            <td>
+                @item.Name
+            </td>
+            <td>
+                <a asp-controller="Tag"
+                   asp-action="Edit" asp-route-id="@item.TagId">Редактировать</a> |
+                <a asp-controller="Tag"
+                   asp-action="Delete" asp-route-id="@item.TagId">Удалить</a>
+            </td>
+        </tr>
+    }
+</table>

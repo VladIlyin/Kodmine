@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Kodmine.Model.Models.Post>
+
+@{
+    ViewData["Title"] = "Tag";
+}
+
+<br />
+<div class="btn-group">
+    <a asp-controller="Post" asp-action="Create" class="btn">
+        <i class="icon-plus"></i> <span>Добавить</span>
+    </a>
+</div>
+<br />
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Заголовок</th>
+            <th scope="col">Дата</th>
+            <th scope="col">Тэги</th>
+            <th scope="col">Действие</th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+
+    <tr>
+        <th scope="row">@item.PostId</th>
+        <td>
+            @item.Title
+        </td>
+        <td>
+            @item.CreateDate.ToShortDateString()
+        </td>
+        <td>
+            @foreach (var postTags in item.PostTags)
+            {
+                <i>@postTags.Tag.Name</i>
+            }
+        </td>
+        <td>
+            <a asp-controller="Post"
+               asp-action="ViewPost" asp-route-id="@item.PostId">Просмотр</a> |
+            <a asp-controller="Post"
+               asp-action="Edit" asp-route-id="@item.PostId">Редактировать</a> |
+            <a asp-controller="Post"
+               asp-action="Delete" asp-route-id="@item.PostId">Удалить</a>
+        </td>
+    </tr>
+    }
+</table>

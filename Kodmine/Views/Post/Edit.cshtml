@@ -1,0 +1,104 @@
+﻿@model Kodmine.Model.Models.Post
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<script>
+    function keyCode(event) {
+        var x = event.keyCode;
+        if (x === 83 && event.ctrlKey) {
+            event.preventDefault()
+            savePostContent()
+        }
+    }
+
+    function savePostContent() {
+        var send = { id: @Model.PostId, content: $("#Content").val() }
+        $.post('@Url.Action("SaveContent", "Post")', send, function (data) { } )
+    }
+
+</script>
+
+<h3>Редактировать</h3>
+
+<hr />
+<div class="row">
+    <form asp-action="Edit">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="PostId" />
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label asp-for="Title" class="control-label"></label>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label asp-for="CreateDate" class="control-label"></label>
+                    <input asp-for="CreateDate" class="form-control" />
+                    <span asp-validation-for="CreateDate" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-10">
+                <div class="form-group" id="content-group">
+                    <label asp-for="Content" class="control-label"></label>
+                    <div>
+                        <a href="#" onclick="savePostContent()">
+                            <span class="glyphicon glyphicon-floppy-disk"></span>
+                        </a>
+                        <button>H1</button>
+                        <button>H2</button>
+                        <button>H3</button>
+                        <button>H4</button>
+                        <button>B</button>
+                        <button>I</button>
+                        <button>Code</button>
+                    </div>
+                    <textarea name="Content" id="Content" class="form-control" rows="20" onkeydown="keyCode(event)">@Model.Content</textarea>
+                    <span asp-validation-for="Content" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Сохранить" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div>
+    <a asp-action="Index">Назад</a>
+</div>
+
+<style>
+
+    #loader {
+        border: 16px solid #f3f3f3; /* Light grey */
+        border-top: 16px solid #808080;
+        border-radius: 50%;
+        width: 80px;
+        height: 80px;
+        animation: spin 2s linear infinite;
+    }
+
+    @@keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+    
+</style>
+
+<div id="loader"></div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

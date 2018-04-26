@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20180412173920_InitialCreate2.cs" />
+    <Compile Remove="Migrations\20180412174319_InitialCreate3.cs" />
+    <Compile Remove="Migrations\20180413095950_Dev.cs" />
+    <Compile Remove="Migrations\20180413101828_Dev.cs" />
+    <Compile Remove="Migrations\20180424134016_NewMigration.cs" />
+    <Compile Remove="Migrations\20180424134800_NewMigration2.cs" />
+    <Compile Remove="Migrations\20180424140437_NewMigration.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Kodmine.Core\Kodmine.Core.csproj" />
+    <ProjectReference Include="..\Kodmine.Model\Kodmine.Model.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System">
+      <HintPath>System</HintPath>
+    </Reference>
+    <Reference Include="System.Data">
+      <HintPath>System.Data</HintPath>
+    </Reference>
+    <Reference Include="System.Xml">
+      <HintPath>System.Xml</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

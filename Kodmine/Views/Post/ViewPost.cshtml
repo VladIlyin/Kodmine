@@ -1,0 +1,12 @@
+﻿@model Kodmine.Model.Models.Post
+
+<h2>@Model.Title</h2>
+<p>
+    @Model.CreateDate.ToShortDateString() |             
+    @foreach (var postTags in Model.PostTags)
+    {
+        <i>@postTags.Tag.Name</i>
+    }
+</p>
+<br />
+@Html.Raw(Model.Content)
