@@ -74,6 +74,18 @@
     <a asp-action="Index">Назад</a>
 </div>
 
+@*@using (Ajax.BeginForm("EmployeeMaster", "Home", new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "divEmp" }))
+{
+    //form content
+}*@
+
+<form asp-controller="Post" asp-action="UploadImage" method="post"
+      enctype="multipart/form-data">
+
+    <input type="file" name="file" />
+    <button type="submit">Загрузить</button>
+</form>
+
 <style>
 
     #loader {
@@ -94,10 +106,9 @@
             transform: rotate(360deg);
         }
     }
-    
 </style>
 
-<div id="loader"></div>
+@*<div id="loader"></div>*@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

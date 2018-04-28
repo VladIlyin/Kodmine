@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -31,6 +32,35 @@ namespace Kodmine.Controllers
         {
             ((IPostRepository)repository).SaveContent(id, content);
             return Json(true);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UploadImage(IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+                return Content("Файл не выбран");
+
+            if (!ValidImageExtension(Path.GetExtension(file.FileName)))
+                return Content("Неподдерживаемый формат файла с изображением");
+            
+            var path = Path.Combine(
+                        Directory.GetCurrentDirectory(), "wwwroot/images_post",
+                        "post" + (EntityId?.ToString() ?? "") + "_" + file.FileName);
+
+            using (var stream = new FileStream(path, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            return Json(true); //RedirectToAction("Files");
+        }
+
+        private bool ValidImageExtension(string ext)
+        {
+            return  ext == ".jpg" || 
+                    ext == ".jpeg" || 
+                    ext == ".png" || 
+                    ext == ".bmp";
         }
 
         //public override ActionResult Index()

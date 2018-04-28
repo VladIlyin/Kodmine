@@ -66,4 +66,7 @@
     <ProjectReference Include="..\Kodmine.DAL\Kodmine.DAL.csproj" />
     <ProjectReference Include="..\Kodmine.Model\Kodmine.Model.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="wwwroot\images_post\" />
+  </ItemGroup>
 </Project>
