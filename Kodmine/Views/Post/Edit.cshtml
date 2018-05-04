@@ -5,6 +5,50 @@
 }
 
 <script>
+
+    $(function () {
+        var content = $('#Content')
+        document.getElementById("code-block-btn").onclick = function (event) {
+            encaseText(content, '<pre class="language-markup"><code>', '</code></pre>')
+        }
+        document.getElementById("code-btn").onclick = function (event) {
+            encaseText(content, '<code>', '</code>')
+        }
+
+        document.getElementById("h1-btn").onclick = function (event) {
+            encaseText(content, '<h1>', '</h1>')
+        }
+
+        document.getElementById("h2-btn").onclick = function (event) {
+            encaseText(content, '<h2>', '</h2>')
+        }
+
+        document.getElementById("h3-btn").onclick = function (event) {
+            encaseText(content, '<h3>', '</h3>')
+        }
+
+        document.getElementById("h4-btn").onclick = function (event) {
+            encaseText(content, '<h4>', '</h4>')
+        }
+
+        document.getElementById("bold-btn").onclick = function (event) {
+            encaseText(content, '<b>', '</b>')
+        }
+
+        document.getElementById("p-btn").onclick = function (event) {
+            encaseText(content, '<p>', '</p>')
+        }
+
+        document.getElementById("encode-btn").onclick = function (event) {
+            content.encodeTags()
+        }
+
+    })
+
+    function encaseText(elem, left, right) {
+        elem.encaseHighlithed(left, right)
+    }
+
     function keyCode(event) {
         var x = event.keyCode;
         if (x === 83 && event.ctrlKey) {
@@ -18,9 +62,90 @@
         $.post('@Url.Action("SaveContent", "Post")', send, function (data) { } )
     }
 
+    $.fn.insertAtCaret = function (text) {
+        return this.each(function () {
+            if (document.selection && this.tagName == 'TEXTAREA') {
+                //IE textarea support
+                this.focus();
+                sel = document.selection.createRange();
+                sel.text = text;
+                this.focus();
+            } else if (this.selectionStart || this.selectionStart == '0') {
+                //MOZILLA/NETSCAPE support
+                startPos = this.selectionStart;
+                endPos = this.selectionEnd;
+                scrollTop = this.scrollTop;
+                this.value = this.value.substring(0, startPos) + text + this.value.substring(endPos, this.value.length);
+                this.focus();
+                this.selectionStart = startPos + text.length;
+                this.selectionEnd = startPos + text.length;
+                this.scrollTop = scrollTop;
+            } else {
+                // IE input[type=text] and other browsers
+                this.value += text;
+                this.focus();
+                this.value = this.value;    // forces cursor to end
+            }
+        });
+    };
+
+    $.fn.encaseHighlithed = function (leftText, rightText) {
+        return this.each(function () {
+            //if (document.selection && this.tagName == 'TEXTAREA') {
+            //    //IE textarea support
+            //    this.focus();
+            //    sel = document.selection.createRange();
+            //    sel.text = text;
+            //    this.focus();
+            /*} else*/ if (this.selectionStart || this.selectionStart == '0') {
+                //MOZILLA/NETSCAPE support
+                startPos = this.selectionStart;
+                endPos = this.selectionEnd;
+                scrollTop = this.scrollTop;
+                this.value = this.value.substring(0, endPos) + rightText + this.value.substring(endPos, this.value.length);
+                this.value = this.value.substring(0, startPos) + leftText + this.value.substring(startPos, this.value.length);
+                this.focus();
+                this.scrollTop = scrollTop;
+            } /*else {*/
+            //    // IE input[type=text] and other browsers
+            //    this.value += text;
+            //    this.focus();
+            //    this.value = this.value;    // forces cursor to end
+            //}
+        });
+    }
+
+    $.fn.encodeTags = function () {
+        return this.each(function () {
+            //if (document.selection && this.tagName == 'TEXTAREA') {
+            //    //IE textarea support
+            //    this.focus();
+            //    sel = document.selection.createRange();
+            //    sel.text = text;
+            //    this.focus();
+            /*} else*/ if (this.selectionStart || this.selectionStart == '0') {
+                //MOZILLA/NETSCAPE support
+                startPos = this.selectionStart;
+                endPos = this.selectionEnd;
+                scrollTop = this.scrollTop;
+                textForEncode = this.value.substring(startPos, endPos)
+                textForEncode = textForEncode.replace(/</g, '&lt;')
+                textForEncode = textForEncode.replace(/>/g, '&gt;')
+                this.value = this.value.substring(0, startPos) + textForEncode + this.value.substring(endPos, this.value.length);
+                this.focus();
+                this.scrollTop = scrollTop;
+            } /*else {*/
+            //    // IE input[type=text] and other browsers
+            //    this.value += text;
+            //    this.focus();
+            //    this.value = this.value;    // forces cursor to end
+            //}
+        });
+    }
+
 </script>
 
-<h3>Редактировать</h3>
+<h3>Редактор контента</h3>
 
 <hr />
 <div class="row">
@@ -51,14 +176,21 @@
                         <a href="#" onclick="savePostContent()">
                             <span class="glyphicon glyphicon-floppy-disk"></span>
                         </a>
-                        <button>H1</button>
-                        <button>H2</button>
-                        <button>H3</button>
-                        <button>H4</button>
-                        <button>B</button>
-                        <button>I</button>
-                        <button>Code</button>
+                        <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal">
+                            Загрузить изображение
+                        </button>
+                        <button type="button" id="p-btn" class="btn">P</button>
+                        <button type="button" id="h1-btn" class="btn">H1</button>
+                        <button type="button" id="h2-btn" class="btn">H2</button>
+                        <button type="button" id="h3-btn" class="btn">H3</button>
+                        <button type="button" id="h4-btn" class="btn">H4</button>
+                        <button type="button" id="bold-btn" class="btn">B</button>
+                        <button class="btn">I</button>
+                        <button type="button" id="code-btn" class="btn">Code</button>
+                        <button type="button" id="code-block-btn" class="btn">CodeBlock</button>
+                        <button type="button" id="encode-btn" class="btn">Encode</button>
                     </div>
+                    <br />
                     <textarea name="Content" id="Content" class="form-control" rows="20" onkeydown="keyCode(event)">@Model.Content</textarea>
                     <span asp-validation-for="Content" class="text-danger"></span>
                 </div>
@@ -70,45 +202,44 @@
     </form>
 </div>
 
+@*<a href="@Url.Action("SaveContent", "Post", new { content = "123", id = "14" })" data-ajax="true" data-ajax-mode="replace" data-ajax-failure="showError" data-ajax-update="#post_addr_form" id="pa_load_form">Cecwecw</a>*@
+<div id="post_addr_form"></div>
+
 <div>
     <a asp-action="Index">Назад</a>
 </div>
 
 @*@using (Ajax.BeginForm("EmployeeMaster", "Home", new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "divEmp" }))
-{
-    //form content
-}*@
+    {
+        //form content
+    }*@
 
-<form asp-controller="Post" asp-action="UploadImage" method="post"
-      enctype="multipart/form-data">
+@*<style>
 
-    <input type="file" name="file" />
-    <button type="submit">Загрузить</button>
-</form>
-
-<style>
-
-    #loader {
-        border: 16px solid #f3f3f3; /* Light grey */
-        border-top: 16px solid #808080;
-        border-radius: 50%;
-        width: 80px;
-        height: 80px;
-        animation: spin 2s linear infinite;
-    }
-
-    @@keyframes spin {
-        0% {
-            transform: rotate(0deg);
+        #loader {
+            border: 16px solid #f3f3f3; /* Light grey */
+            border-top: 16px solid #808080;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            animation: spin 2s linear infinite;
         }
 
-        100% {
-            transform: rotate(360deg);
+        @@keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
-    }
-</style>
+    </style>*@
 
 @*<div id="loader"></div>*@
+
+@{ Html.RenderPartial("Modal_ImageLoad"); }
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

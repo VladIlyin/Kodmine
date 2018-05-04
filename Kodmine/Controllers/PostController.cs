@@ -35,24 +35,26 @@ namespace Kodmine.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UploadImage(IFormFile file)
+        public async Task<IActionResult> UploadImage(IFormFile images, int postId)
         {
-            if (file == null || file.Length == 0)
+            if (images == null || images.Length == 0)
                 return Content("Файл не выбран");
 
-            if (!ValidImageExtension(Path.GetExtension(file.FileName)))
+            if (!ValidImageExtension(Path.GetExtension(images.FileName)))
                 return Content("Неподдерживаемый формат файла с изображением");
-            
-            var path = Path.Combine(
-                        Directory.GetCurrentDirectory(), "wwwroot/images_post",
-                        "post" + (EntityId?.ToString() ?? "") + "_" + file.FileName);
 
-            using (var stream = new FileStream(path, FileMode.Create))
+            string path = "/images_post/" + "post" + postId.ToString() + "_" + images.FileName;
+
+            var fullPath = Path.Combine(
+                        Directory.GetCurrentDirectory(), "wwwroot/" + path);
+
+            using (var stream = new FileStream(fullPath, FileMode.Create))
             {
-                await file.CopyToAsync(stream);
+                await images.CopyToAsync(stream);
             }
 
-            return Json(true); //RedirectToAction("Files");
+            //return Json($"<image src='{path}'></image>");
+            return Json(path);
         }
 
         private bool ValidImageExtension(string ext)

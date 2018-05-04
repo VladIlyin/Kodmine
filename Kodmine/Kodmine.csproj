@@ -3,6 +3,7 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <UserSecretsId>aspnet-Kodmine-9D5B5C26-F4D9-43C0-8F18-625930673BA0</UserSecretsId>
     <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+    <ApplicationIcon>wwwroot\favicon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Data\Migrations\**" />
@@ -16,6 +17,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.2" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.jQuery.Unobtrusive.Ajax" Version="3.2.5" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.1" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup>
@@ -60,6 +62,19 @@
     <None Include="Pages\_ValidationScriptsPartial.cshtml" />
     <None Include="Pages\_ViewImports.cshtml" />
     <None Include="Pages\_ViewStart.cshtml" />
+    <None Include="wwwroot\lib\jquery-ajax-unobtrusive\.gitattributes" />
+    <None Include="wwwroot\lib\jquery-ajax-unobtrusive\.gitignore" />
+    <None Include="wwwroot\lib\jquery-ajax-unobtrusive\build.cmd" />
+    <None Include="wwwroot\lib\jquery-ajax-unobtrusive\build.msbuild" />
+    <None Include="wwwroot\lib\jquery-ajax-unobtrusive\CONTRIBUTING.md" />
+    <None Include="wwwroot\lib\jquery-ajax-unobtrusive\dist\jquery.unobtrusive-ajax.js" />
+    <None Include="wwwroot\lib\jquery-ajax-unobtrusive\dist\jquery.unobtrusive-ajax.min.js" />
+    <None Include="wwwroot\lib\jquery-ajax-unobtrusive\gulpfile.js" />
+    <None Include="wwwroot\lib\jquery-ajax-unobtrusive\Microsoft.jQuery.Unobtrusive.Ajax.nuspec" />
+    <None Include="wwwroot\lib\jquery-ajax-unobtrusive\README.md" />
+    <None Include="wwwroot\lib\jquery-ajax-unobtrusive\run.ps1" />
+    <None Include="wwwroot\lib\jquery-ajax-unobtrusive\src\jquery.unobtrusive-ajax.js" />
+    <None Include="wwwroot\lib\jquery-ajax-unobtrusive\version.props" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Kodmine.Core\Kodmine.Core.csproj" />

@@ -2,6 +2,10 @@
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
+    "iis": {
+      "applicationUrl": "http://localhost/Kodmine",
+      "sslPort": 0
+    },
     "iisExpress": {
       "applicationUrl": "http://localhost:56545/",
       "sslPort": 44393
@@ -18,7 +22,6 @@
     },
     "Kodmine": {
       "commandName": "Project",
-      "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
