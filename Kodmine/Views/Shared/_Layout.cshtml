@@ -56,9 +56,9 @@
             @*@await Html.PartialAsync("_LoginPartial")*@
         </div>
     </nav>
-        <div>
+        <div class="main-content">
             <div class="row">
-                <div class="col-sm-3">
+                <div class="col-2">
                     <ul class="nav flex-column">
                         <li class="nav-item">
                             <a class="nav-link active" href="#">Гайды</a>
@@ -74,28 +74,46 @@
                         </li>
                     </ul>
                 </div>
-                <div class="col-sm">
+                <div class="col-9">
                     @RenderBody()
                 </div>
-                <div class="col-sm-2">
+                <div class="col-1">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">C#</a>
+                            <a class="nav-link active" href="#">
+                                <span><img class="logo_tech" src="~/images/logo/c-sharp.png" /></span>
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">JavaScript</a>
+                            <a class="nav-link" href="#">
+                                <span>
+                                    <img class="logo_tech" src="~/images/logo/js.png" />
+                                </span>
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">ASP NET CORE</a>
+                            <a class="nav-link" href="#">
+                                <span>
+                                    <img class="logo_tech"  src="~/images/logo/asp-net.png" />
+                                </span>
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">HTML5</a>
+                            <a class="nav-link" href="#">
+                                <span>
+                                    <img class="logo_tech" src="~/images/logo/html.png" />
+                                </span>
+                            </a>
                         </li>
-                        <li class="nav-item">
+                        @*<li class="nav-item">
                             <a class="nav-link" href="#">CSS</a>
-                        </li>
+                        </li>*@
                         <li class="nav-item">
-                            <a class="nav-link" href="#">SQL</a>
+                            <a class="nav-link" href="#">
+                                <span>
+                                    <img class="logo_tech" src="~/images/logo/sql.png" />
+                                </span>
+                            </a>
                         </li>
                     </ul>
                 </div>
