@@ -6,19 +6,22 @@
     <title>@ViewData["Title"] - Kodmine</title>
 
     <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" /> 
+        @*asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.css" />*@
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>
-    <environment exclude="Development">
+    @*<environment exclude="Development">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-    </environment>
+    </environment>*@
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+        @*<script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>*@
         <script src="~/lib/jquery-ajax-unobtrusive/dist/jquery.unobtrusive-ajax.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
@@ -39,36 +42,69 @@
     </environment>
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a asp-page="/Index" class="navbar-brand">Kodmine</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-page="/Index">Home</a></li>
-                    <li><a asp-controller="Post" asp-action="Index">Посты</a></li>
-                    <li><a asp-controller="Tag" asp-action="Index">Тэги</a></li>
-                    <li><a asp-controller="Rubric" asp-action="Index">Рубрики</a></li>
-                </ul>
-                @await Html.PartialAsync("_LoginPartial")
-            </div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a asp-controller="Home" class="navbar-brand" asp-action="Index">Kodmine</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="#navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav mr-4">
+                <li class="nav-item"><a class="nav-link" asp-controller="Post" asp-action="Index">Посты</a></li>
+                <li class="nav-item"><a class="nav-link" asp-controller="Tag" asp-action="Index">Теги</a></li>
+                <li class="nav-item"><a class="nav-link" asp-controller="Rubric" asp-action="Index">Рубрики</a></li>
+            </ul>
+            @*@await Html.PartialAsync("_LoginPartial")*@
         </div>
     </nav>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; 2017 - Kodmine</p>
-        </footer>
-    </div>
-
-    @RenderSection("Scripts", required: false)
+        <div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">Гайды</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Обучение</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Синтаксис</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled" href="#">Справка</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm">
+                    @RenderBody()
+                </div>
+                <div class="col-sm-2">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">C#</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">JavaScript</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">ASP NET CORE</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">HTML5</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">CSS</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">SQL</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <hr />
+            <footer>
+                <p>&copy; 2017 - Kodmine</p>
+            </footer>
+        </div>
+        @RenderSection("Scripts", required: false)
 </body>
 </html>
