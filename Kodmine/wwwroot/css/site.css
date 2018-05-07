@@ -32,8 +32,27 @@ body {
 }
 
 .logo_tech {
-    width: 50px;
-    height: 50px;
+    max-width: 50px;
+    height: auto;
+}
+
+.post-content-shortened {
+    margin-top: 5px;
+    margin-bottom:5px;
+    color: gray;
+}
+
+.post-content-date {
+    font-size: smaller;
+}
+
+.post-content-tags {
+    text-transform: uppercase;
+}
+
+.view-post-shortened h3 {
+    font-family: Calibri;
+    font-size: 28px;
 }
 
 /*.navbar {

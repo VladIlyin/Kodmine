@@ -1,1 +1,7 @@
-﻿
+﻿@model IEnumerable<Kodmine.Model.Models.Post>
+
+@foreach (var post in Model)
+{
+    Html.RenderPartial("_ViewPostShortened.cshtml", post);
+}
+

@@ -30,12 +30,18 @@ namespace Kodmine.DAL.Repository
 
         public IEnumerable<Post> Get()
         {
-            return db.Posts.Include(x => x.PostTags).ThenInclude(y => y.Tag).ToList();
+            return db.Posts.Include(x => x.PostTags).ThenInclude(y => y.Tag);
         }
 
         public Post GetById(int id)
         {
-            return db.Posts.Include(x => x.PostTags).ThenInclude(y => y.Tag).Where(i => i.PostId == id).FirstOrDefault();
+            //TODO: правильно реализовать запрос
+            return Get().Where(i => i.PostId == id).FirstOrDefault();
+        }
+
+        public IEnumerable<Post> PostListMainPage(int take)
+        {
+            return db.Posts.Take(take).OrderByDescending(ord => ord.CreateDate).Include(x => x.PostTags).ThenInclude(y => y.Tag);
         }
 
         public void SaveContent(int id, string content)

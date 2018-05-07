@@ -9,6 +9,14 @@
 <h3>Добавить пост</h3>
 <hr />
 
+<script>
+    function setToday() {
+        var date = new Date();
+        var currentDate = date.toISOString().slice(0, 10);
+        document.getElementById("CreateDate").value = currentDate;
+    }
+</script>
+
 <form asp-action="Create">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input type="hidden" asp-for="PostId" />
@@ -22,7 +30,7 @@
         </div>
         <div class="col-md-3">
             <div class="form-group">
-                <label asp-for="CreateDate" class="control-label"></label>
+                <label asp-for="CreateDate" class="control-label"></label>&nbsp;<a href="#" onclick="setToday()">Сегодня?</a>
                 <input asp-for="CreateDate" class="form-control" />
                 <span asp-validation-for="CreateDate" class="text-danger"></span>
             </div>

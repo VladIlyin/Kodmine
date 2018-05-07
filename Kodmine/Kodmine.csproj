@@ -26,7 +26,6 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.1" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Pages\About.cshtml" />
     <None Include="Pages\Account\AccessDenied.cshtml" />
     <None Include="Pages\Account\ConfirmEmail.cshtml" />
     <None Include="Pages\Account\ExternalLogin.cshtml" />
@@ -54,14 +53,6 @@
     <None Include="Pages\Account\ResetPasswordConfirmation.cshtml" />
     <None Include="Pages\Account\SignedOut.cshtml" />
     <None Include="Pages\Account\_ViewImports.cshtml" />
-    <None Include="Pages\Contact.cshtml" />
-    <None Include="Pages\Error.cshtml" />
-    <None Include="Pages\Index.cshtml" />
-    <None Include="Pages\_Layout.cshtml" />
-    <None Include="Pages\_LoginPartial.cshtml" />
-    <None Include="Pages\_ValidationScriptsPartial.cshtml" />
-    <None Include="Pages\_ViewImports.cshtml" />
-    <None Include="Pages\_ViewStart.cshtml" />
     <None Include="wwwroot\lib\jquery-ajax-unobtrusive\.gitattributes" />
     <None Include="wwwroot\lib\jquery-ajax-unobtrusive\.gitignore" />
     <None Include="wwwroot\lib\jquery-ajax-unobtrusive\build.cmd" />

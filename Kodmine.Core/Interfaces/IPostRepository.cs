@@ -9,5 +9,6 @@ namespace Kodmine.Core.Interfaces
     public interface IPostRepository : IRepository<Post>
     {
         void SaveContent(int id, string content);
+        IEnumerable<Post> PostListMainPage(int take);
     }
 }

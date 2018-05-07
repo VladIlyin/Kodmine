@@ -9,9 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kodmine.Core", "Kodmine.Cor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kodmine.DAL", "Kodmine.DAL\Kodmine.DAL.csproj", "{C1140582-4689-493B-858E-98E37FA1BD14}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kodmine.Model", "Kodmine.Model\Kodmine.Model.csproj", "{619794B8-D06C-495C-80D8-45D278BA9A1E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kodmine.Model", "Kodmine.Model\Kodmine.Model.csproj", "{619794B8-D06C-495C-80D8-45D278BA9A1E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kodmine.Resources", "Kodmine.Resources\Kodmine.Resources.csproj", "{EA9698E7-4AB4-4C43-9C4A-0B106D435614}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kodmine.Resources", "Kodmine.Resources\Kodmine.Resources.csproj", "{67C04A5C-8690-4A86-80DA-774375C8B1E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +35,10 @@ Global
 		{619794B8-D06C-495C-80D8-45D278BA9A1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{619794B8-D06C-495C-80D8-45D278BA9A1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{619794B8-D06C-495C-80D8-45D278BA9A1E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EA9698E7-4AB4-4C43-9C4A-0B106D435614}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EA9698E7-4AB4-4C43-9C4A-0B106D435614}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EA9698E7-4AB4-4C43-9C4A-0B106D435614}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EA9698E7-4AB4-4C43-9C4A-0B106D435614}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67C04A5C-8690-4A86-80DA-774375C8B1E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67C04A5C-8690-4A86-80DA-774375C8B1E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67C04A5C-8690-4A86-80DA-774375C8B1E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67C04A5C-8690-4A86-80DA-774375C8B1E1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,29 @@
+﻿@model Kodmine.Model.Models.Post
+
+<div class="view-post-shortened">
+    <h3>@Html.DisplayFor(model => model.Title)</h3>
+    <span class="post-content-date">
+        @Html.DisplayFor(model => model.CreateDate)
+    </span>
+    
+    @if (Model.PostTags.Count > 0)
+    {
+    <span class="post-content-tags">
+        @foreach (var postTag in Model.PostTags)
+        {
+            @:| @(postTag.Tag.Name)
+        }
+    </span>
+    }
+    else
+    {
+        <br />
+    }
+
+        <div class="post-content-shortened">
+            @Html.Raw(Model.ContentShortened)...
+            <a asp-action="ViewPost" asp-controller="Post" asp-route-id="@Model.PostId">Читать</a>
+            |<a asp-action="Edit" asp-controller="Post" asp-route-id="@Model.PostId"> Редактировать</a>
+        </div>
+</div>
+<hr />
