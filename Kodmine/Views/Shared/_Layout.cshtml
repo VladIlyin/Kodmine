@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Kodmine.Middleware;
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -6,16 +8,16 @@
     <title>@ViewData["Title"] - Kodmine</title>
 
     <environment include="Development">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" /> 
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" />
         @*asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.css" />*@
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>
     @*<environment exclude="Development">
-        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-    </environment>*@
+            <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+                  asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+                  asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+            <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+        </environment>*@
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
@@ -42,6 +44,15 @@
     </environment>
 </head>
 <body>
+    @{
+        if (TempData["rubricList"] == null)
+        {
+            DynamicLayoutMiddleware._rubricList = null;
+            DynamicLayoutMiddleware.FillRubricList();
+            TempData["rubricList"] = DynamicLayoutMiddleware._rubricList;
+        }
+        //Context.Items.TryGetValue("rubricList", out rubricList);
+    }
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" asp-controller="Home" asp-action="Index">Kodmine</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="#navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,73 +67,67 @@
             @*@await Html.PartialAsync("_LoginPartial")*@
         </div>
     </nav>
-        <div class="main-content">
-            <div class="row">
-                <div class="col-2">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">Гайды</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Обучение</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Синтаксис</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled" href="#">Справка</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-9">
-                    @RenderBody()
-                </div>
-                <div class="col-1">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">
-                                <span><img class="logo_tech" src="~/images/logo/c-sharp.png" /></span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span>
-                                    <img class="logo_tech" src="~/images/logo/js.png" />
-                                </span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span>
-                                    <img class="logo_tech"  src="~/images/logo/asp-net.png" />
-                                </span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span>
-                                    <img class="logo_tech" src="~/images/logo/html.png" />
-                                </span>
-                            </a>
-                        </li>
-                        @*<li class="nav-item">
+    <div class="main-content">
+        <div class="row">
+            <div class="col-2">
+                @if (TempData["rubricList"] != null)
+                {
+                    @await Html.PartialAsync("_Rubric", TempData["rubricList"])
+                }
+                else
+                {
+                    <div class="text-danger">Ошибка <br /> загрузки <br /> рубрик</div>
+                }
+            </div>
+            <div class="col-9">
+                @RenderBody()
+            </div>
+            <div class="col-1">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">
+                            <span><img class="logo_tech" src="~/images/logo/c-sharp.png" /></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <span>
+                                <img class="logo_tech" src="~/images/logo/js.png" />
+                            </span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <span>
+                                <img class="logo_tech" src="~/images/logo/asp-net.png" />
+                            </span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <span>
+                                <img class="logo_tech" src="~/images/logo/html.png" />
+                            </span>
+                        </a>
+                    </li>
+                    @*<li class="nav-item">
                             <a class="nav-link" href="#">CSS</a>
                         </li>*@
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span>
-                                    <img class="logo_tech" src="~/images/logo/sql.png" />
-                                </span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <span>
+                                <img class="logo_tech" src="~/images/logo/sql.png" />
+                            </span>
+                        </a>
+                    </li>
+                </ul>
             </div>
-            <hr />
-            <footer>
-                <p>&copy; 2017 - Kodmine</p>
-            </footer>
         </div>
-        @RenderSection("Scripts", required: false)
+        <hr />
+        <footer>
+            <p>&copy; 2017 - Kodmine</p>
+        </footer>
+    </div>
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

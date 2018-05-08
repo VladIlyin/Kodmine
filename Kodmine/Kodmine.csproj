@@ -7,9 +7,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Data\Migrations\**" />
+    <Compile Remove="Pages\**" />
     <Content Remove="Data\Migrations\**" />
+    <Content Remove="Pages\**" />
     <EmbeddedResource Remove="Data\Migrations\**" />
+    <EmbeddedResource Remove="Pages\**" />
     <None Remove="Data\Migrations\**" />
+    <None Remove="Pages\**" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Data\ApplicationDbContext.cs" />
@@ -26,33 +30,6 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.1" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Pages\Account\AccessDenied.cshtml" />
-    <None Include="Pages\Account\ConfirmEmail.cshtml" />
-    <None Include="Pages\Account\ExternalLogin.cshtml" />
-    <None Include="Pages\Account\ForgotPassword.cshtml" />
-    <None Include="Pages\Account\ForgotPasswordConfirmation.cshtml" />
-    <None Include="Pages\Account\Lockout.cshtml" />
-    <None Include="Pages\Account\Login.cshtml" />
-    <None Include="Pages\Account\LoginWith2fa.cshtml" />
-    <None Include="Pages\Account\LoginWithRecoveryCode.cshtml" />
-    <None Include="Pages\Account\Manage\ChangePassword.cshtml" />
-    <None Include="Pages\Account\Manage\Disable2fa.cshtml" />
-    <None Include="Pages\Account\Manage\EnableAuthenticator.cshtml" />
-    <None Include="Pages\Account\Manage\ExternalLogins.cshtml" />
-    <None Include="Pages\Account\Manage\GenerateRecoveryCodes.cshtml" />
-    <None Include="Pages\Account\Manage\Index.cshtml" />
-    <None Include="Pages\Account\Manage\ResetAuthenticator.cshtml" />
-    <None Include="Pages\Account\Manage\SetPassword.cshtml" />
-    <None Include="Pages\Account\Manage\TwoFactorAuthentication.cshtml" />
-    <None Include="Pages\Account\Manage\_Layout.cshtml" />
-    <None Include="Pages\Account\Manage\_ManageNav.cshtml" />
-    <None Include="Pages\Account\Manage\_StatusMessage.cshtml" />
-    <None Include="Pages\Account\Manage\_ViewImports.cshtml" />
-    <None Include="Pages\Account\Register.cshtml" />
-    <None Include="Pages\Account\ResetPassword.cshtml" />
-    <None Include="Pages\Account\ResetPasswordConfirmation.cshtml" />
-    <None Include="Pages\Account\SignedOut.cshtml" />
-    <None Include="Pages\Account\_ViewImports.cshtml" />
     <None Include="wwwroot\lib\jquery-ajax-unobtrusive\.gitattributes" />
     <None Include="wwwroot\lib\jquery-ajax-unobtrusive\.gitignore" />
     <None Include="wwwroot\lib\jquery-ajax-unobtrusive\build.cmd" />

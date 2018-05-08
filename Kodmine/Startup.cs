@@ -15,15 +15,14 @@ using Kodmine.DAL.Models;
 using Kodmine.Core;
 using Kodmine.Core.Interfaces;
 using Kodmine.DAL.Repository;
+using Kodmine.Extensions;
 
 namespace Kodmine
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+
+        public Startup(IConfiguration configuration) => Configuration = configuration;
 
         public IConfiguration Configuration { get; }
 
@@ -32,33 +31,42 @@ namespace Kodmine
         {
 
             //var connection = @"Server=(localdb)\mssqllocaldb;Database=EFGetStarted.AspNetCore.NewDb;Trusted_Connection=True;ConnectRetryCount=0";
-            services.AddDbContext<KodmineDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<KodmineDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Singleton);
 
             //services.AddDbContext<ApplicationDbContext>(options =>
             //    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<KodmineDbContext>()
-                .AddDefaultTokenProviders();
+            //services.AddIdentity<ApplicationUser, IdentityRole>()
+            //    .AddEntityFrameworkStores<KodmineDbContext>()
+            //    .AddDefaultTokenProviders();
 
             services.AddMvc();
-                //.AddRazorPagesOptions(options =>
-                //{
-                //    options.Conventions.AuthorizeFolder("/Account/Manage");
-                //    options.Conventions.AuthorizePage("/Account/Logout");
-                //});
+            //.AddRazorPagesOptions(options =>
+            //{
+            //    options.Conventions.AuthorizeFolder("/Account/Manage");
+            //    options.Conventions.AuthorizePage("/Account/Logout");
+            //});
+
+            services.AddSession();
 
             // Register no-op EmailSender used by account confirmation and password reset during development
             // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=532713
             //services.AddSingleton<IEmailSender, EmailSender>();
-            services.AddScoped<ITagRepository, TagRepository>();
-            services.AddScoped<IPostRepository, PostRepository>();
-            services.AddScoped<IRubricRepository, RubricRepository>();
+            services.AddSingleton<ITagRepository, TagRepository>();
+            services.AddSingleton<IPostRepository, PostRepository>();
+            services.AddSingleton<IRubricRepository, RubricRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+
+            //app.Use(async (context, next) =>
+            //{
+            //    context.Items.Add("rub", "rubric");
+            //    await next.Invoke();
+            //});
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -74,15 +82,19 @@ namespace Kodmine
 
             app.UseAuthentication();
 
-            app.UseMvcWithDefaultRoute();
+            app.UseSession();
 
-            //app.UseMvc(routes =>
-            //{
-            //routes.MapRoute(
-            //    name: "default",
-            //    template: "{controller=Home}/{action=Index}/{id?}");
-            //        //defaults: new { controller = "Home", action = "Index" });
-            //});
+            app.UseDynamicLayoutMiddleware();
+
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
+
+            
+
         }
     }
 }
