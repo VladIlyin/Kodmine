@@ -17,9 +17,8 @@ namespace Kodmine.Controllers
 
         public IActionResult Index()
         {
-            var posts = postRepo.PostListMainPage(5); //.Get().OrderByDescending(x => x.CreateDate).Take(5);
-            //var rub = rubricRepo.Get();
-            //ViewData["Rubric"] = rub;
+            var s = Newtonsoft.Json.JsonConvert.SerializeObject(new[] { 1, 2, 3 });
+            var posts = postRepo.PostListMainPage(5);
             return View(posts);
         }
     }

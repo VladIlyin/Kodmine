@@ -10,7 +10,17 @@ namespace Kodmine.Middleware
 {
     public class DynamicLayoutMiddleware
     {
-        public static IEnumerable<Rubric> _rubricList;
+        static IEnumerable<Rubric> _rubricList;
+
+        public static IEnumerable<Rubric> RubricList {
+            get
+            {
+                if (_rubricRepo == null)
+                    return null;
+
+                return _rubricRepo.Get();
+            }
+        }
 
         private static IRubricRepository _rubricRepo;
         private static RequestDelegate _next;
@@ -23,16 +33,15 @@ namespace Kodmine.Middleware
 
         public Task InvokeAsync(HttpContext context)
         {
-            FillRubricList();
+            //FillRubricList();
             //string sessionId = context.Session.Id;
             //context.Items.Add("rubricList", _rubricList);
             return _next(context);// .Invoke();
         }
 
-        public static void FillRubricList()
+        static void FillRubricList()
         {
-            if (_rubricList == null)
-                _rubricList = _rubricRepo.Get();
+            _rubricList = _rubricRepo.Get();
         }
 
     }

@@ -1,4 +1,6 @@
 ﻿@using Kodmine.Middleware;
+@using Kodmine.Model.Models;
+@using Newtonsoft.Json;
 
 <!DOCTYPE html>
 <html>
@@ -12,12 +14,12 @@
         @*asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.css" />*@
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>
-    @*<environment exclude="Development">
-            <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+    <environment exclude="Development">
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
                   asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
                   asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
             <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-        </environment>*@
+        </environment>
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
@@ -45,13 +47,18 @@
 </head>
 <body>
     @{
-        if (TempData["rubricList"] == null)
+        IEnumerable<Rubric> rubList = null;
+
+        if (!TempData.Keys.Contains("rubricList"))
         {
-            DynamicLayoutMiddleware._rubricList = null;
-            DynamicLayoutMiddleware.FillRubricList();
-            TempData["rubricList"] = DynamicLayoutMiddleware._rubricList;
+            rubList = DynamicLayoutMiddleware.RubricList;
+            TempData.Keep("rubricList");
+            TempData["rubricList"] = JsonConvert.SerializeObject(rubList);
         }
-        //Context.Items.TryGetValue("rubricList", out rubricList);
+        else
+        {
+            rubList = JsonConvert.DeserializeObject<IEnumerable<Rubric>>(TempData.Peek("rubricList").ToString());
+        }
     }
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" asp-controller="Home" asp-action="Index">Kodmine</a>
@@ -70,13 +77,9 @@
     <div class="main-content">
         <div class="row">
             <div class="col-2">
-                @if (TempData["rubricList"] != null)
+                @if (rubList != null)
                 {
-                    @await Html.PartialAsync("_Rubric", TempData["rubricList"])
-                }
-                else
-                {
-                    <div class="text-danger">Ошибка <br /> загрузки <br /> рубрик</div>
+                    @await Html.PartialAsync("_Rubric", rubList)
                 }
             </div>
             <div class="col-9">

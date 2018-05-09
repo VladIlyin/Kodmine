@@ -22,7 +22,7 @@ namespace Kodmine.DAL.Repository
 
         public void Delete(int id)
         {
-            var post = db.Posts.AsNoTracking().SingleOrDefault(m => m.PostId == id);
+            var post = db.Posts.Find(id);
 
             db.Remove(post);
             db.SaveChanges();

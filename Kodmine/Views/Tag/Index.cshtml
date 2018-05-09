@@ -4,7 +4,9 @@
 }
 
 <br />
-<a asp-controller="Tag" asp-action="Create"><button type="button" class="btn btn-primary">Добавить</button></a>
+<a asp-controller="Tag" asp-action="Create" class="btn">
+    <i class="icon-plus"></i> <span>Добавить</span>
+</a>
 <br />
 
 <table class="table table-hover">
@@ -12,6 +14,7 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">Название</th>
+            <th scope="col">Действие</th>
         </tr>
     </thead>
     @foreach (var item in Model)

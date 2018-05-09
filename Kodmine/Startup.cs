@@ -78,6 +78,8 @@ namespace Kodmine
                 app.UseExceptionHandler("/Error");
             }
 
+            //app.UseExceptionHandler("/Error");
+
             app.UseStaticFiles();
 
             app.UseAuthentication();

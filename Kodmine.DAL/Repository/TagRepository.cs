@@ -25,7 +25,7 @@ namespace Kodmine.DAL.Repository
 
         public void Delete(int id)
         {
-            var tag = db.Tags.AsNoTracking().SingleOrDefault(m => m.TagId == id);
+            var tag = db.Tags.Find(id);
 
             db.Remove(tag);
             db.SaveChanges();

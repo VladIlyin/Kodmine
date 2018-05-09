@@ -76,15 +76,16 @@ namespace Kodmine.Controllers.Base
         [ValidateAntiForgeryToken]
         public virtual ActionResult Delete(int id, T collection)
         {
-            try
-            {
+            //try
+            //{
                 repository.Delete(id);
                 return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    //throw ex;
+            //    //return View("~/Views/Error/Index.cshtml");
+            //}
         }
 
     }

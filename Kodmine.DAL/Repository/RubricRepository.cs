@@ -23,7 +23,7 @@ namespace Kodmine.DAL.Repository
 
         public void Delete(int id)
         {
-            var rubric = db.Rubrics.AsNoTracking().SingleOrDefault(m => m.RubricId == id);
+            var rubric = db.Rubrics.Find(id);
 
             db.Remove(rubric);
             db.SaveChanges();
