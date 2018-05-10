@@ -1,4 +1,4 @@
-﻿@using Kodmine.Middleware;
+﻿@using Kodmine.Services;
 @using Kodmine.Model.Models;
 @using Newtonsoft.Json;
 
@@ -10,8 +10,9 @@
     <title>@ViewData["Title"] - Kodmine</title>
 
     <environment include="Development">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" />
-        @*asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.css" />*@
+        @*<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+        asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.css" />*@
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>
     <environment exclude="Development">
@@ -51,9 +52,12 @@
 
         if (!TempData.Keys.Contains("rubricList"))
         {
-            rubList = DynamicLayoutMiddleware.RubricList;
-            TempData.Keep("rubricList");
-            TempData["rubricList"] = JsonConvert.SerializeObject(rubList);
+            rubList = DynamicLayoutService.RubricList;
+            if (rubList != null)
+            { 
+                TempData.Keep("rubricList");
+                TempData["rubricList"] = JsonConvert.SerializeObject(rubList);
+            }
         }
         else
         {

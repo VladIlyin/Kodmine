@@ -60,9 +60,10 @@ namespace Kodmine.Controllers.Base
                 repository.Update(item);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ViewBag.Message = ex.GetBaseException().Message;
+                return View("~/Views/Error/Index.cshtml");
             }
         }
 

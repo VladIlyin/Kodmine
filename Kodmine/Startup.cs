@@ -26,12 +26,14 @@ namespace Kodmine
 
         public IConfiguration Configuration { get; }
 
+        public static IServiceProvider ServiceMan { get; private set; }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
 
             //var connection = @"Server=(localdb)\mssqllocaldb;Database=EFGetStarted.AspNetCore.NewDb;Trusted_Connection=True;ConnectRetryCount=0";
-            services.AddDbContext<KodmineDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Singleton);
+            services.AddDbContext<KodmineDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Scoped);
 
             //services.AddDbContext<ApplicationDbContext>(options =>
             //    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -52,9 +54,18 @@ namespace Kodmine
             // Register no-op EmailSender used by account confirmation and password reset during development
             // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=532713
             //services.AddSingleton<IEmailSender, EmailSender>();
-            services.AddSingleton<ITagRepository, TagRepository>();
-            services.AddSingleton<IPostRepository, PostRepository>();
-            services.AddSingleton<IRubricRepository, RubricRepository>();
+
+            //Everything related to the db context should live only within one request, 
+            //so it should be scoped
+            services.AddScoped<ITagRepository, TagRepository>();
+            services.AddScoped<IPostRepository, PostRepository>();
+            services.AddScoped<IRubricRepository, RubricRepository>();
+
+            ServiceMan = services.BuildServiceProvider();
+            //var r = ServiceMan.GetService<IRubricRepository>();
+            //services.AddSingleton<DynamicLayoutService>(s => {
+            //    return new DynamicLayoutService(r);
+            //    });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -84,9 +95,9 @@ namespace Kodmine
 
             app.UseAuthentication();
 
-            app.UseSession();
+            //app.UseSession();
 
-            app.UseDynamicLayoutMiddleware();
+            //app.UseDynamicLayoutMiddleware();
 
             app.UseMvc(routes =>
             {

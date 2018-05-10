@@ -50,6 +50,7 @@
     <ProjectReference Include="..\Kodmine.Model\Kodmine.Model.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Middleware\" />
     <Folder Include="wwwroot\images_post\" />
   </ItemGroup>
 </Project>

@@ -7,25 +7,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Kodmine.DAL.Repository
 {
-    public class PostRepository : BaseRepository, IPostRepository
+    public class PostRepository : BaseRepository<Post>, IPostRepository
     {
 
         public PostRepository(KodmineDbContext db) : base(db)
         {
-        }
-
-        public void Create(Post item)
-        {
-            db.Posts.Add(item);
-            db.SaveChanges();
-        }
-
-        public void Delete(int id)
-        {
-            var post = db.Posts.Find(id);
-
-            db.Remove(post);
-            db.SaveChanges();
         }
 
         public IEnumerable<Post> Get()
@@ -33,7 +19,7 @@ namespace Kodmine.DAL.Repository
             return db.Posts.Include(x => x.PostTags).ThenInclude(y => y.Tag);
         }
 
-        public Post GetById(int id)
+        public new Post GetById(int id)
         {
             //TODO: правильно реализовать запрос
             return Get().Where(i => i.PostId == id).FirstOrDefault();
@@ -51,15 +37,8 @@ namespace Kodmine.DAL.Repository
                 return;
 
             post.Content = content;
-            Update(post);
+            base.Update(post);
         }
 
-        public void Update(Post item)
-        {
-            db.Posts.Attach(item);
-            db.Entry(item).State = EntityState.Modified;
-
-            db.SaveChanges();
-        }
     }
 }
