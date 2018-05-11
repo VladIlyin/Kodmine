@@ -1,4 +1,6 @@
-﻿@model Kodmine.Model.Models.Post
+﻿@using Kodmine.Model.Models;
+
+@model Kodmine.Model.Models.Post
 
 @{
     ViewData["Title"] = "Edit";
@@ -145,6 +147,10 @@
 
 </script>
 
+<template id="tagTemplate">
+    <div class="rounded"></div>
+</template>
+
 <h3>Редактирование</h3>
 
 <hr />
@@ -199,7 +205,30 @@
                 </div>
             </div>
         </div>
-    </form>
+        <div class="row">
+            <div class="col-md-2">
+                <div class="form-group">
+                    @*<label class="control-label"></label>*@
+                    <select class="form-control">
+                        @foreach (Tag tag in ViewBag.TagList)
+                        {
+                            <option value="@tag.Name">@tag.Name</option>
+                        }
+                    </select>
+                    @*<span asp-validation-for="CreateDate" class="text-danger"></span>*@
+                </div>
+            </div>
+            <div class="col-md-10">
+                <div style="display:inline-block;padding: 5px 10px 5px 10px;border:solid;border-color:#dddddd;border-width:thin;border-radius: 15px 15px;">
+                    <span style="font-size:larger;">C#</span>
+                    <a class="close" style="margin:0;padding:0;float:initial;font-size:initial;" onclick="alert('123')">
+                        <img width="20" height="14" style="margin-top:0px;vertical-align:baseline;" src="~/images/si-glyph-button-error.svg" />
+                    </a>
+                </div>
+            </div>
+        </div>
+</form>
+
 @*</div>*@
 
 @*<a href="@Url.Action("SaveContent", "Post", new { content = "123", id = "14" })" data-ajax="true" data-ajax-mode="replace" data-ajax-failure="showError" data-ajax-update="#post_addr_form" id="pa_load_form">Cecwecw</a>*@

@@ -18,8 +18,19 @@ namespace Kodmine.Controllers
     public class PostController : ControllerCRUD<Post>
     {
 
-        public PostController(IPostRepository repository) : base(repository)
+        private readonly IPostTagRepository postTagRepo;
+        private readonly ITagRepository tagRepo;
+
+        public PostController(IPostRepository postRepo, ITagRepository tagRepo, IPostTagRepository postTagRepo) : base(postRepo)
         {
+            this.postTagRepo = postTagRepo;
+            this.tagRepo = tagRepo;
+        }
+
+        public override ActionResult Edit(int id)
+        {
+            ViewBag.TagList = tagRepo.Get();
+            return base.Edit(id);
         }
 
         public ActionResult ViewPost(int id)
@@ -53,8 +64,19 @@ namespace Kodmine.Controllers
                 await images.CopyToAsync(stream);
             }
 
-            //return Json($"<image src='{path}'></image>");
             return Json(path);
+        }
+
+        public IActionResult AddTag(int tagId, int postId)
+        {
+            postTagRepo.AddTagToPost(tagId, postId);
+            return Json(true);
+        }
+
+        public IActionResult RemoveTag(int tagId, int postId)
+        {
+            postTagRepo.RemoveTagFromPost(tagId, postId);
+            return Json(true);
         }
 
         private bool ValidImageExtension(string ext)
@@ -64,12 +86,6 @@ namespace Kodmine.Controllers
                     ext == ".png" || 
                     ext == ".bmp";
         }
-
-        //public override ActionResult Index()
-        //{
-        //    var postTag = ((IPostRepository)repository).GetPostTag();
-        //    return View();
-        //}
 
     }
 }

@@ -20,8 +20,8 @@ namespace Kodmine
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
-                //.UseKestrel()
-                //.UseIISIntegration()
+                .UseKestrel()
+                .UseIISIntegration()
                 .Build();
     }
 }

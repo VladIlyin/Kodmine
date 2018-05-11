@@ -59,6 +59,7 @@ namespace Kodmine
             //so it should be scoped
             services.AddScoped<ITagRepository, TagRepository>();
             services.AddScoped<IPostRepository, PostRepository>();
+            services.AddScoped<IPostTagRepository, PostTagRepository>();
             services.AddScoped<IRubricRepository, RubricRepository>();
 
             ServiceMan = services.BuildServiceProvider();
@@ -95,7 +96,7 @@ namespace Kodmine
 
             app.UseAuthentication();
 
-            //app.UseSession();
+            app.UseSession();
 
             //app.UseDynamicLayoutMiddleware();
 
