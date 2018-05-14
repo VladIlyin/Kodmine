@@ -11,7 +11,6 @@ namespace Kodmine.Controllers.Base
     {
 
         protected readonly IRepository<T> repository;
-        protected int? EntityId;
 
         public ControllerCRUD(IRepository<T> repository)
         {
@@ -46,7 +45,6 @@ namespace Kodmine.Controllers.Base
 
         public virtual ActionResult Edit(int id)
         {
-            EntityId = id;
             var model = repository.GetById(id);
             return View(model);
         }

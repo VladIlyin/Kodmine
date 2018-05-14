@@ -29,8 +29,19 @@ namespace Kodmine.Controllers
 
         public override ActionResult Edit(int id)
         {
-            ViewBag.TagList = tagRepo.Get();
-            return base.Edit(id);
+            var model = repository.GetById(id);
+            var tagIdList = model.PostTags.Select(x => x.TagId);
+
+            var tagList = tagRepo.Get().OrderBy(x => x.Name);
+            var tagListOnThisPost = from t in tagList
+                              where tagIdList.Contains(t.TagId)
+                              select new { tagId = t.TagId, tagName = t.Name };
+
+            ViewBag.TagIdListOnThisPost = tagListOnThisPost.Select(x => x.tagId);
+            ViewBag.TagListOnThisPost = tagListOnThisPost;
+            ViewBag.TagList = tagList;
+
+            return View(model);
         }
 
         public ActionResult ViewPost(int id)

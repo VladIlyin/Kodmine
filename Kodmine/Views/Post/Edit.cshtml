@@ -155,78 +155,59 @@
 
 <hr />
 @*<div class="row">*@
-    <form asp-action="Edit">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <input type="hidden" asp-for="PostId" />
-        <div class="row">
-            <div class="col-md-7">
-                <div class="form-group">
-                    <label asp-for="Title" class="control-label"></label>
-                    <input asp-for="Title" class="form-control" />
-                    <span asp-validation-for="Title" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label asp-for="CreateDate" class="control-label"></label>
-                    <input asp-for="CreateDate" class="form-control" />
-                    <span asp-validation-for="CreateDate" class="text-danger"></span>
-                </div>
+<form asp-action="Edit">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="PostId" />
+    <div class="row">
+        <div class="col-md-7">
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-10">
-                <div class="form-group" id="content-group">
-                    <label asp-for="Content" class="control-label"></label>
-                    <div>
-                        <a href="#" onclick="savePostContent()">
-                            <span class="glyphicon glyphicon-floppy-save"></span>
-                        </a>
-                        <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal">
-                            Загрузить изображение
-                        </button>
-                        <button type="button" id="p-btn" class="btn">P</button>
-                        <button type="button" id="h1-btn" class="btn">H1</button>
-                        <button type="button" id="h2-btn" class="btn">H2</button>
-                        <button type="button" id="h3-btn" class="btn">H3</button>
-                        <button type="button" id="h4-btn" class="btn">H4</button>
-                        <button type="button" id="bold-btn" class="btn">B</button>
-                        <button class="btn">I</button>
-                        <button type="button" id="code-btn" class="btn">Code</button>
-                        <button type="button" id="code-block-btn" class="btn">CodeBlock</button>
-                        <button type="button" id="encode-btn" class="btn">Encode</button>
-                    </div>
-                    <br />
-                    <textarea name="Content" id="Content" class="form-control" rows="20" onkeydown="keyCode(event)">@Model.Content</textarea>
-                    <span asp-validation-for="Content" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Сохранить" class="btn btn-default" />
-                </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label asp-for="CreateDate" class="control-label"></label>
+                <input asp-for="CreateDate" class="form-control" />
+                <span asp-validation-for="CreateDate" class="text-danger"></span>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-2">
-                <div class="form-group">
-                    @*<label class="control-label"></label>*@
-                    <select class="form-control">
-                        @foreach (Tag tag in ViewBag.TagList)
-                        {
-                            <option value="@tag.Name">@tag.Name</option>
-                        }
-                    </select>
-                    @*<span asp-validation-for="CreateDate" class="text-danger"></span>*@
-                </div>
-            </div>
-            <div class="col-md-10">
-                <div style="display:inline-block;padding: 5px 10px 5px 10px;border:solid;border-color:#dddddd;border-width:thin;border-radius: 15px 15px;">
-                    <span style="font-size:larger;">C#</span>
-                    <a class="close" style="margin:0;padding:0;float:initial;font-size:initial;" onclick="alert('123')">
-                        <img width="20" height="14" style="margin-top:0px;vertical-align:baseline;" src="~/images/si-glyph-button-error.svg" />
+    </div>
+    <div class="row">
+        @await Html.PartialAsync("_Tags")
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <div class="form-group" id="content-group">
+                <label asp-for="Content" class="control-label"></label>
+                <div>
+                    <a href="#" onclick="savePostContent()">
+                        <span class="glyphicon glyphicon-floppy-save"></span>
                     </a>
+                    <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal">
+                        Загрузить изображение
+                    </button>
+                    <button type="button" id="p-btn" class="btn">P</button>
+                    <button type="button" id="h1-btn" class="btn">H1</button>
+                    <button type="button" id="h2-btn" class="btn">H2</button>
+                    <button type="button" id="h3-btn" class="btn">H3</button>
+                    <button type="button" id="h4-btn" class="btn">H4</button>
+                    <button type="button" id="bold-btn" class="btn">B</button>
+                    <button class="btn">I</button>
+                    <button type="button" id="code-btn" class="btn">Code</button>
+                    <button type="button" id="code-block-btn" class="btn">CodeBlock</button>
+                    <button type="button" id="encode-btn" class="btn">Encode</button>
                 </div>
+                <br />
+                <textarea name="Content" id="Content" class="form-control" rows="20" onkeydown="keyCode(event)">@Model.Content</textarea>
+                <span asp-validation-for="Content" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-default" />
             </div>
         </div>
+    </div>
 </form>
 
 @*</div>*@
