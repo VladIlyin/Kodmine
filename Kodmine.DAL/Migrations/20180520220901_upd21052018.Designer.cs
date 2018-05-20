@@ -11,9 +11,10 @@ using System;
 namespace Kodmine.DAL.Migrations
 {
     [DbContext(typeof(KodmineDbContext))]
-    partial class KodmineDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180520220901_upd21052018")]
+    partial class upd21052018
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

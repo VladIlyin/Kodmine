@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Kodmine.Controllers
 {
@@ -20,11 +21,16 @@ namespace Kodmine.Controllers
 
         private readonly IPostTagRepository postTagRepo;
         private readonly ITagRepository tagRepo;
+        private readonly IRubricRepository rubRepo;
 
-        public PostController(IPostRepository postRepo, ITagRepository tagRepo, IPostTagRepository postTagRepo) : base(postRepo)
+        public PostController(IPostRepository postRepo, 
+                                ITagRepository tagRepo, 
+                                IPostTagRepository postTagRepo,
+                                IRubricRepository rubRepo) : base(postRepo)
         {
             this.postTagRepo = postTagRepo;
             this.tagRepo = tagRepo;
+            this.rubRepo = rubRepo;
         }
 
         public override ActionResult Edit(int id)
@@ -32,14 +38,23 @@ namespace Kodmine.Controllers
             var model = repository.GetById(id);
             var tagIdList = model.PostTags.Select(x => x.TagId);
 
-            var tagList = tagRepo.Get().OrderBy(x => x.Name);
-            var tagListOnThisPost = from t in tagList
-                              where tagIdList.Contains(t.TagId)
-                              select new { tagId = t.TagId, tagName = t.Name };
+            var tagList = tagRepo.Get(); //.OrderBy(x => x.Name);
+            var tagListViewModel = from t in tagList
+                                       //where tagIdList.Contains(t.TagId)
+                                   orderby t.Name
+                                   select new TagViewModel { Id = t.TagId, Name = t.Name, Selected = tagIdList.Contains(t.TagId) };
 
-            ViewBag.TagIdListOnThisPost = tagListOnThisPost.Select(x => x.tagId);
-            ViewBag.TagListOnThisPost = tagListOnThisPost;
-            ViewBag.TagList = tagList;
+            //ViewBag.TagIdListOnThisPost = tagListOnThisPost.Select(x => x.TagId);
+            ViewBag.TagListViewModel = tagListViewModel;
+            //ViewBag.TagList = tagList;
+
+            var rubList = rubRepo.Get();
+            var rubListViewModel = from t in rubList
+                                       //where tagIdList.Contains(t.TagId)
+                                   orderby t.Name
+                                   select new RubricViewModel { Id = t.RubricId, Name = t.Name, Selected = t.RubricId == model.RubricId };
+
+            ViewBag.RubListViewModel = rubListViewModel;
 
             return View(model);
         }

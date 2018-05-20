@@ -34,6 +34,9 @@ namespace Kodmine.Model.Models
 
         //[ForeignKey("Rubric")]
         public int RubricId { get; set; }
+
+        public virtual Rubric Rubric { get; set; }
+
         public virtual ICollection<PostTag> PostTags { get; set; }
     }
 }

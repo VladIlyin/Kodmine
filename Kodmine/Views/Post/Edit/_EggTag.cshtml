@@ -1,0 +1,8 @@
+﻿@model Kodmine.Model.Models.TagViewModel
+
+<div class="egg-tag">
+    <span class="egg-tag-title">@Model.Name</span><span class="egg-tag-id" hidden>@Model.Id</span>
+    <a onclick="onClickRemoveTag(this);">
+        <img src="~/images/si-glyph-button-error.svg" />
+    </a>
+</div>

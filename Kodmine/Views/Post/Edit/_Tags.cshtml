@@ -1,0 +1,46 @@
+﻿@using Kodmine.Model.Models;
+
+<script>
+
+</script>
+
+<div class="col-md-3">
+    <div class="form-group">
+        <label class="control-label">Теги</label>
+        <select id="select-tag-list" class="form-control" onchange="onSelectTag();">
+            <option id="0" hidden disabled selected> -- Выберите тег -- </option>
+            @{
+                //IEnumerable<int> tagIdList = ViewBag.TagIdListOnThisPost;
+
+                foreach (TagViewModel tag in ViewBag.TagListViewModel ?? new List<TagViewModel>())
+                {
+                    if (tag.Selected)
+                    {
+                        <option id="@tag.Id" value="@tag.Name" disabled>@tag.Name</option>
+                    }
+                    else
+                    {
+                        <option id="@tag.Id" value="@tag.Name">@tag.Name</option>
+                    }
+                }
+            }
+        </select>
+        
+    </div>
+</div>
+<div class="col-md-9 align-bottom tagList">
+    <label class="control-label">&nbsp;</label>
+    <div class="post-tag-list">
+        @foreach (TagViewModel tag in ViewBag.TagListViewModel)
+        {
+            if (tag.Selected)
+            {
+                await Html.RenderPartialAsync("~/Views/Post/Edit/_EggTag.cshtml", tag);
+            }
+        }
+    </div>
+</div>
+
+<template id="tagTemp">
+    @{await Html.RenderPartialAsync("~/Views/Post/Edit/_EggTag.cshtml", new TagViewModel()); }
+</template>

@@ -16,7 +16,7 @@ namespace Kodmine.DAL.Repository
 
         public IEnumerable<Post> Get()
         {
-            return db.Posts.Include(x => x.PostTags).ThenInclude(y => y.Tag);
+            return db.Posts.Include(r => r.Rubric).Include(x => x.PostTags).ThenInclude(y => y.Tag);
         }
 
         public new Post GetById(int id)

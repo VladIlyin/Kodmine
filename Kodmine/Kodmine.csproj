@@ -7,16 +7,23 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Data\Migrations\**" />
+    <Compile Remove="Middleware\**" />
     <Compile Remove="Pages\**" />
     <Content Remove="Data\Migrations\**" />
+    <Content Remove="Middleware\**" />
     <Content Remove="Pages\**" />
     <EmbeddedResource Remove="Data\Migrations\**" />
+    <EmbeddedResource Remove="Middleware\**" />
     <EmbeddedResource Remove="Pages\**" />
     <None Remove="Data\Migrations\**" />
+    <None Remove="Middleware\**" />
     <None Remove="Pages\**" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Data\ApplicationDbContext.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Views\Post\Edit\style.css" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
@@ -52,7 +59,6 @@
     <ProjectReference Include="..\Kodmine.Model\Kodmine.Model.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Middleware\" />
     <Folder Include="wwwroot\images_post\" />
   </ItemGroup>
 </Project>

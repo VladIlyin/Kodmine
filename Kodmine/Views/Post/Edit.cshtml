@@ -6,155 +6,16 @@
     ViewData["Title"] = "Edit";
 }
 
-<script>
+@{ await Html.RenderPartialAsync("~/Views/Post/Edit/_Script.cshtml"); }
 
-    $(function () {
-        var content = $('#Content')
-        document.getElementById("code-block-btn").onclick = function (event) {
-            encaseText(content, '<pre class="language-markup"><code>', '</code></pre>')
-        }
-        document.getElementById("code-btn").onclick = function (event) {
-            encaseText(content, '<code>', '</code>')
-        }
-
-        document.getElementById("h1-btn").onclick = function (event) {
-            encaseText(content, '<h1>', '</h1>')
-        }
-
-        document.getElementById("h2-btn").onclick = function (event) {
-            encaseText(content, '<h2>', '</h2>')
-        }
-
-        document.getElementById("h3-btn").onclick = function (event) {
-            encaseText(content, '<h3>', '</h3>')
-        }
-
-        document.getElementById("h4-btn").onclick = function (event) {
-            encaseText(content, '<h4>', '</h4>')
-        }
-
-        document.getElementById("bold-btn").onclick = function (event) {
-            encaseText(content, '<b>', '</b>')
-        }
-
-        document.getElementById("p-btn").onclick = function (event) {
-            encaseText(content, '<p>', '</p>')
-        }
-
-        document.getElementById("encode-btn").onclick = function (event) {
-            content.encodeTags()
-        }
-
-    })
-
-    function encaseText(elem, left, right) {
-        elem.encaseHighlithed(left, right)
-    }
-
-    function keyCode(event) {
-        var x = event.keyCode;
-        if (x === 83 && event.ctrlKey) {
-            event.preventDefault()
-            savePostContent()
-        }
-    }
-
-    function savePostContent() {
-        var send = { id: @Model.PostId, content: $("#Content").val() }
-        $.post('@Url.Action("SaveContent", "Post")', send, function (data) { } )
-    }
-
-    $.fn.insertAtCaret = function (text) {
-        return this.each(function () {
-            if (document.selection && this.tagName == 'TEXTAREA') {
-                //IE textarea support
-                this.focus();
-                sel = document.selection.createRange();
-                sel.text = text;
-                this.focus();
-            } else if (this.selectionStart || this.selectionStart == '0') {
-                //MOZILLA/NETSCAPE support
-                startPos = this.selectionStart;
-                endPos = this.selectionEnd;
-                scrollTop = this.scrollTop;
-                this.value = this.value.substring(0, startPos) + text + this.value.substring(endPos, this.value.length);
-                this.focus();
-                this.selectionStart = startPos + text.length;
-                this.selectionEnd = startPos + text.length;
-                this.scrollTop = scrollTop;
-            } else {
-                // IE input[type=text] and other browsers
-                this.value += text;
-                this.focus();
-                this.value = this.value;    // forces cursor to end
-            }
-        });
-    };
-
-    $.fn.encaseHighlithed = function (leftText, rightText) {
-        return this.each(function () {
-            //if (document.selection && this.tagName == 'TEXTAREA') {
-            //    //IE textarea support
-            //    this.focus();
-            //    sel = document.selection.createRange();
-            //    sel.text = text;
-            //    this.focus();
-            /*} else*/ if (this.selectionStart || this.selectionStart == '0') {
-                //MOZILLA/NETSCAPE support
-                startPos = this.selectionStart;
-                endPos = this.selectionEnd;
-                scrollTop = this.scrollTop;
-                this.value = this.value.substring(0, endPos) + rightText + this.value.substring(endPos, this.value.length);
-                this.value = this.value.substring(0, startPos) + leftText + this.value.substring(startPos, this.value.length);
-                this.focus();
-                this.scrollTop = scrollTop;
-            } /*else {*/
-            //    // IE input[type=text] and other browsers
-            //    this.value += text;
-            //    this.focus();
-            //    this.value = this.value;    // forces cursor to end
-            //}
-        });
-    }
-
-    $.fn.encodeTags = function () {
-        return this.each(function () {
-            //if (document.selection && this.tagName == 'TEXTAREA') {
-            //    //IE textarea support
-            //    this.focus();
-            //    sel = document.selection.createRange();
-            //    sel.text = text;
-            //    this.focus();
-            /*} else*/ if (this.selectionStart || this.selectionStart == '0') {
-                //MOZILLA/NETSCAPE support
-                startPos = this.selectionStart;
-                endPos = this.selectionEnd;
-                scrollTop = this.scrollTop;
-                textForEncode = this.value.substring(startPos, endPos)
-                textForEncode = textForEncode.replace(/</g, '&lt;')
-                textForEncode = textForEncode.replace(/>/g, '&gt;')
-                this.value = this.value.substring(0, startPos) + textForEncode + this.value.substring(endPos, this.value.length);
-                this.focus();
-                this.scrollTop = scrollTop;
-            } /*else {*/
-            //    // IE input[type=text] and other browsers
-            //    this.value += text;
-            //    this.focus();
-            //    this.value = this.value;    // forces cursor to end
-            //}
-        });
-    }
-
-</script>
-
-<template id="tagTemplate">
-    <div class="rounded"></div>
-</template>
+<environment include="Development">
+    <link href="~/css/post/edit.css" rel="stylesheet" />
+</environment>
 
 <h3>Редактирование</h3>
 
 <hr />
-@*<div class="row">*@
+
 <form asp-action="Edit">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input type="hidden" asp-for="PostId" />
@@ -174,9 +35,40 @@
             </div>
         </div>
     </div>
+    @*------------------------------------------------------------*@
+    @*РУБРИКА*@
     <div class="row">
-        @await Html.PartialAsync("_Tags")
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="control-label">Рубрика</label>
+                <select id="select-tag-list" class="form-control" onchange="onSelectTag();">
+                    <option id="0" hidden disabled selected> -- Выберите рубрику -- </option>
+                    @{
+
+                        foreach (RubricViewModel topic in ViewBag.rubListViewModel ?? new List<RubricViewModel>())
+                        {
+                            if (topic.Selected)
+                            {
+                                <option id="@topic.Id" value="@topic.Name" selected>@topic.Name</option>
+                            }
+                            else
+                            {
+                                <option id="@topic.Id" value="@topic.Name">@topic.Name</option>
+                            }
+                        }
+                    }
+                </select>
+
+            </div>
+        </div>
     </div>
+    @*------------------------------------------------------------*@
+    @*ТЕГИ*@
+    @*------------------------------------------------------------*@
+    <div class="row">
+        @await Html.PartialAsync("~/Views/Post/Edit/_Tags.cshtml")
+    </div>
+    @*------------------------------------------------------------*@
     <div class="row">
         <div class="col-md-10">
             <div class="form-group" id="content-group">
@@ -210,8 +102,6 @@
     </div>
 </form>
 
-@*</div>*@
-
 @*<a href="@Url.Action("SaveContent", "Post", new { content = "123", id = "14" })" data-ajax="true" data-ajax-mode="replace" data-ajax-failure="showError" data-ajax-update="#post_addr_form" id="pa_load_form">Cecwecw</a>*@
 <div id="post_addr_form"></div>
 
@@ -224,32 +114,7 @@
         //form content
     }*@
 
-@*<style>
-
-        #loader {
-            border: 16px solid #f3f3f3; /* Light grey */
-            border-top: 16px solid #808080;
-            border-radius: 50%;
-            width: 80px;
-            height: 80px;
-            animation: spin 2s linear infinite;
-        }
-
-        @@keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-    </style>*@
-
-@*<div id="loader"></div>*@
-
-@{ Html.RenderPartial("Modal_ImageLoad"); }
-
+@{await Html.RenderPartialAsync("~/Views/Post/Edit/_ImageLoad_Modal.cshtml"); }
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

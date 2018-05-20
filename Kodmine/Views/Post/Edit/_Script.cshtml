@@ -1,0 +1,202 @@
+﻿<script>
+
+    $(function ()
+    {
+        var content = $('#Content')
+        document.getElementById("code-block-btn").onclick = function (event) {
+            encaseText(content, '<pre class="language-markup"><code>', '</code></pre>')
+        }
+        document.getElementById("code-btn").onclick = function (event) {
+            encaseText(content, '<code>', '</code>')
+        }
+
+        document.getElementById("h1-btn").onclick = function (event) {
+            encaseText(content, '<h1>', '</h1>')
+        }
+
+        document.getElementById("h2-btn").onclick = function (event) {
+            encaseText(content, '<h2>', '</h2>')
+        }
+
+        document.getElementById("h3-btn").onclick = function (event) {
+            encaseText(content, '<h3>', '</h3>')
+        }
+
+        document.getElementById("h4-btn").onclick = function (event) {
+            encaseText(content, '<h4>', '</h4>')
+        }
+
+        document.getElementById("bold-btn").onclick = function (event) {
+            encaseText(content, '<b>', '</b>')
+        }
+
+        document.getElementById("p-btn").onclick = function (event) {
+            encaseText(content, '<p>', '</p>')
+        }
+
+        document.getElementById("encode-btn").onclick = function (event) {
+            content.encodeTags()
+        }
+
+    })
+
+    function encaseText(elem, left, right) {
+        elem.encaseHighlithed(left, right)
+    }
+
+    function keyCode(event) {
+        var x = event.keyCode;
+        if (x === 83 && event.ctrlKey) {
+            event.preventDefault()
+            savePostContent()
+        }
+    }
+
+    function savePostContent() {
+        var send = { id: @Model.PostId, content: $("#Content").val() }
+        $.post('@Url.Action("SaveContent", "Post")', send, function (data) { } )
+    }
+
+    $.fn.insertAtCaret = function (text) {
+        return this.each(function () {
+            if (document.selection && this.tagName == 'TEXTAREA') {
+                //IE textarea support
+                this.focus();
+                sel = document.selection.createRange();
+                sel.text = text;
+                this.focus();
+            } else if (this.selectionStart || this.selectionStart == '0') {
+                //MOZILLA/NETSCAPE support
+                startPos = this.selectionStart;
+                endPos = this.selectionEnd;
+                scrollTop = this.scrollTop;
+                this.value = this.value.substring(0, startPos) + text + this.value.substring(endPos, this.value.length);
+                this.focus();
+                this.selectionStart = startPos + text.length;
+                this.selectionEnd = startPos + text.length;
+                this.scrollTop = scrollTop;
+            } else {
+                // IE input[type=text] and other browsers
+                this.value += text;
+                this.focus();
+                this.value = this.value;    // forces cursor to end
+            }
+        });
+    };
+
+    $.fn.encaseHighlithed = function (leftText, rightText) {
+        return this.each(function () {
+            //if (document.selection && this.tagName == 'TEXTAREA') {
+            //    //IE textarea support
+            //    this.focus();
+            //    sel = document.selection.createRange();
+            //    sel.text = text;
+            //    this.focus();
+            /*} else*/ if (this.selectionStart || this.selectionStart == '0') {
+                //MOZILLA/NETSCAPE support
+                startPos = this.selectionStart;
+                endPos = this.selectionEnd;
+                scrollTop = this.scrollTop;
+                this.value = this.value.substring(0, endPos) + rightText + this.value.substring(endPos, this.value.length);
+                this.value = this.value.substring(0, startPos) + leftText + this.value.substring(startPos, this.value.length);
+                this.focus();
+                this.scrollTop = scrollTop;
+            } /*else {*/
+            //    // IE input[type=text] and other browsers
+            //    this.value += text;
+            //    this.focus();
+            //    this.value = this.value;    // forces cursor to end
+            //}
+        });
+    }
+
+    $.fn.encodeTags = function () {
+        return this.each(function () {
+            //if (document.selection && this.tagName == 'TEXTAREA') {
+            //    //IE textarea support
+            //    this.focus();
+            //    sel = document.selection.createRange();
+            //    sel.text = text;
+            //    this.focus();
+            /*} else*/ if (this.selectionStart || this.selectionStart == '0') {
+                //MOZILLA/NETSCAPE support
+                startPos = this.selectionStart;
+                endPos = this.selectionEnd;
+                scrollTop = this.scrollTop;
+                textForEncode = this.value.substring(startPos, endPos)
+                textForEncode = textForEncode.replace(/</g, '&lt;')
+                textForEncode = textForEncode.replace(/>/g, '&gt;')
+                this.value = this.value.substring(0, startPos) + textForEncode + this.value.substring(endPos, this.value.length);
+                this.focus();
+                this.scrollTop = scrollTop;
+            } /*else {*/
+            //    // IE input[type=text] and other browsers
+            //    this.value += text;
+            //    this.focus();
+            //    this.value = this.value;    // forces cursor to end
+            //}
+        });
+    }
+
+
+    function onSelectTag() {
+	    var selectTagList = $('#select-tag-list')
+		var tagName = selectTagList.val()
+		var tagId = selectTagList.find('option:selected').attr('id')
+
+		addElementTagToDOM(tagId, tagName)
+		addTag(tagId)
+
+        markOption(tagName, true)
+    }
+
+    function onClickRemoveTag(e) {
+        var tagId = $(e).siblings("span.egg-tag-id").text()
+        deleteTag(tagId)
+
+        markOption($(e).siblings("span.egg-tag-title").text(), false)
+
+        $(e).closest("div.egg-tag").remove()
+    }
+
+    function addElementTagToDOM(tagId, tagName) {
+        var container = $('<div/>').html($('#tagTemp').html())
+        container.find('span.egg-tag-title').text(tagName)
+        container.find('span.egg-tag-id').text(tagId)
+        $('.post-tag-list').append(container.html())
+    }
+
+    function addTag(tagId) {
+
+		var data = { tagId: tagId, postId: @Model.PostId };
+
+		$.post("@Url.Action("AddTag")", data, function (data, status, jqXHR) {
+
+        }).fail(function (jqXHR, status, errorThrown) {
+
+        })
+
+    }
+
+    function deleteTag(tagId) {
+		var data = { tagId: tagId, postId: @Model.PostId };
+
+		$.post("@Url.Action("RemoveTag")", data, function (data, status, jqXHR) {
+
+        }).fail(function (jqXHR, status, errorThrown) {
+
+        })
+    }
+
+    function markOption(name, selected) {
+		if(selected)
+			$('#select-tag-list option[value="' + name + '"]').attr('disabled', true)
+		else
+		{
+			var elem = $('#select-tag-list')
+			elem.find('option[value="' + name + '"]').attr('disabled', false)
+			elem.val('')
+		}
+
+    }
+</script>
