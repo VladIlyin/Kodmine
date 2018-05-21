@@ -53,6 +53,7 @@ namespace Kodmine.Controllers.Base
         [ValidateAntiForgeryToken]
         public virtual ActionResult Edit(int id, T item)
         {
+            //TODO кнопка сохранить без возврата на страницу Index
             try
             {
                 repository.Update(item);

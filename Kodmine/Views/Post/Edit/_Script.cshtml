@@ -40,6 +40,23 @@
 
     })
 
+    //оборачиваем выбранный текстовый узел в тег span
+    function surroundSelection() {
+        var span = document.createElement("span");
+        span.style.fontWeight = "bold";
+        span.style.color = "green";
+
+        if (window.getSelection) {
+            var sel = window.getSelection();
+            if (sel.rangeCount) {
+                var range = sel.getRangeAt(0).cloneRange();
+                range.surroundContents(span);
+                sel.removeAllRanges();
+                sel.addRange(range);
+            }
+        }
+    }
+
     function encaseText(elem, left, right) {
         elem.encaseHighlithed(left, right)
     }

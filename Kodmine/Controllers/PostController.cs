@@ -79,6 +79,7 @@ namespace Kodmine.Controllers
         [HttpPost]
         public async Task<IActionResult> UploadImage(IFormFile images, int postId)
         {
+            //TODO: в HTML оборачивать <img></img> в тег <figure> согласно HTML5
             if (images == null || images.Length == 0)
                 return Content("Файл не выбран");
 

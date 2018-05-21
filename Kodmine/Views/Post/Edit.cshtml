@@ -16,6 +16,14 @@
 
 <hr />
 
+<script>
+    $(function () {
+        $('#viewRender, #viewHTML').each(function () {
+            this.contentEditable = true;
+        });
+    })
+</script>
+
 <form asp-action="Edit">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input type="hidden" asp-for="PostId" />
@@ -93,6 +101,8 @@
                 </div>
                 <br />
                 <textarea name="Content" id="Content" class="form-control" rows="20" onkeydown="keyCode(event)">@Model.Content</textarea>
+                <div id="viewHTML" style="padding:5px;">@Html.Raw(Model.Content)</div>
+                <div id="viewRender" style="background-color:black;color:white;border: 1px solid #ccc;padding: 5px;">@Model.Content</div>
                 <span asp-validation-for="Content" class="text-danger"></span>
             </div>
             <div class="form-group">
