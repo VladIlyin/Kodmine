@@ -21,7 +21,7 @@ namespace Kodmine.DAL.Repository
 
         public new Post GetById(int id)
         {
-            //TODO: правильно реализовать запрос
+            //TODO: правильно реализовать запрос согласно EF Core Related Data
             return Get().Where(i => i.PostId == id).FirstOrDefault();
         }
 

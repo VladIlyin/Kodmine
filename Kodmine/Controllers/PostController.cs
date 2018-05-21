@@ -42,6 +42,7 @@ namespace Kodmine.Controllers
             var model = repository.GetById(id);
             var tagIdList = model.PostTags.Select(x => x.TagId);
 
+            //TODO: использовать asp-items как в Create
             var tagList = tagRepo.Get(); //.OrderBy(x => x.Name);
             var tagListViewModel = from t in tagList
                                        //where tagIdList.Contains(t.TagId)
