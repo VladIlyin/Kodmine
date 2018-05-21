@@ -150,6 +150,18 @@
         markOption(tagName, true)
     }
 
+    function onSelectTopic(elem) {
+
+        var data = { postId: @Model.PostId, topicId: $(elem).children(":selected").attr("id") }
+
+        $.post("@Url.Action("SetTopic")", data, function (data, status, jqXHR) {
+
+        }).fail(function (jqXHR, status, errorThrown) {
+
+        })
+
+    }
+
     function onClickRemoveTag(e) {
         var tagId = $(e).siblings("span.egg-tag-id").text()
         deleteTag(tagId)

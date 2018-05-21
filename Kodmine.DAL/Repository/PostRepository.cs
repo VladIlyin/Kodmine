@@ -40,5 +40,14 @@ namespace Kodmine.DAL.Repository
             base.Update(post);
         }
 
+        public void SetTopic(int id, int value)
+        {
+            var post = db.Posts.Find(id);
+            if (post == null)
+                return;
+
+            post.RubricId = value;
+            base.Update(post);
+        }
     }
 }

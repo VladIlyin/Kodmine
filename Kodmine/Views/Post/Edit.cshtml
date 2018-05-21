@@ -1,4 +1,4 @@
-﻿@using Kodmine.Model.Models;
+﻿@using Kodmine.ViewModel.Topic;
 
 @model Kodmine.Model.Models.Post
 
@@ -41,11 +41,11 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label class="control-label">Рубрика</label>
-                <select id="select-tag-list" class="form-control" onchange="onSelectTag();">
+                <select id="select-topic-list" class="form-control" onchange="onSelectTopic(this);">
                     <option id="0" hidden disabled selected> -- Выберите рубрику -- </option>
                     @{
 
-                        foreach (RubricViewModel topic in ViewBag.rubListViewModel ?? new List<RubricViewModel>())
+                        foreach (TopicViewModel topic in ViewBag.rubListViewModel ?? new List<TopicViewModel>())
                         {
                             if (topic.Selected)
                             {

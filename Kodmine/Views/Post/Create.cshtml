@@ -1,4 +1,6 @@
-﻿@model Kodmine.Model.Models.Post
+﻿@using Kodmine.ViewModel.Topic;
+
+@model Kodmine.Model.Models.Post
 
 @{
     ViewData["Title"] = "Create";
@@ -33,6 +35,17 @@
                 <label asp-for="CreateDate" class="control-label"></label>&nbsp;<a href="#" onclick="setToday()">Сегодня?</a>
                 <input asp-for="CreateDate" class="form-control" />
                 <span asp-validation-for="CreateDate" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="control-label">Рубрика</label>
+                <select asp-for="RubricId" asp-items="ViewBag.rubListViewModel" id="select-topic-list" class="form-control" onchange="onSelectTopic(this);">
+                    <option id="0" hidden disabled selected> -- Выберите рубрику -- </option>
+                </select>
+                <span asp-validation-for="RubricId" class="text-danger"></span>
             </div>
         </div>
     </div>

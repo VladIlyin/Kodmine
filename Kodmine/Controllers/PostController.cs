@@ -1,24 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Kodmine.Controllers.Base;
+using Kodmine.Core.Interfaces;
+using Kodmine.Model.Models;
+using Kodmine.ViewModel.Tag;
+using Kodmine.ViewModel.Topic;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
-using Kodmine.Controllers.Base;
-using Kodmine.Core.Base;
-using Kodmine.Core.Interfaces;
-using Kodmine.Model.Models;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Html;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace Kodmine.Controllers
 {
     public class PostController : ControllerCRUD<Post>
     {
-
+        private readonly IPostRepository postRepo;
         private readonly IPostTagRepository postTagRepo;
         private readonly ITagRepository tagRepo;
         private readonly IRubricRepository rubRepo;
@@ -28,9 +24,17 @@ namespace Kodmine.Controllers
                                 IPostTagRepository postTagRepo,
                                 IRubricRepository rubRepo) : base(postRepo)
         {
+            this.postRepo = postRepo;
             this.postTagRepo = postTagRepo;
             this.tagRepo = tagRepo;
             this.rubRepo = rubRepo;
+        }
+
+        public override ActionResult Create()
+        {
+            ViewBag.rubListViewModel = from t in rubRepo.Get()
+                                       select new SelectListItem() { Value = t.RubricId.ToString(), Text = t.Name };
+            return View();
         }
 
         public override ActionResult Edit(int id)
@@ -52,7 +56,7 @@ namespace Kodmine.Controllers
             var rubListViewModel = from t in rubList
                                        //where tagIdList.Contains(t.TagId)
                                    orderby t.Name
-                                   select new RubricViewModel { Id = t.RubricId, Name = t.Name, Selected = t.RubricId == model.RubricId };
+                                   select new TopicViewModel { Id = t.RubricId, Name = t.Name, Selected = t.RubricId == model.RubricId };
 
             ViewBag.RubListViewModel = rubListViewModel;
 
@@ -102,6 +106,12 @@ namespace Kodmine.Controllers
         public IActionResult RemoveTag(int tagId, int postId)
         {
             postTagRepo.RemoveTagFromPost(tagId, postId);
+            return Json(true);
+        }
+
+        public IActionResult SetTopic(int postId, int topicId)
+        {
+            postRepo.SetTopic(postId, topicId);
             return Json(true);
         }
 

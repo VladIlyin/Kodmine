@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Kodmine.Model.Models
+namespace Kodmine.ViewModel.Tag
 {
     public class TagViewModel
     {

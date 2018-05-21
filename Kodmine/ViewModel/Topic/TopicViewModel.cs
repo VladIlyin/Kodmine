@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Kodmine.Model.Models
+namespace Kodmine.ViewModel.Topic
 {
-    public class RubricViewModel
+    public class TopicViewModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
