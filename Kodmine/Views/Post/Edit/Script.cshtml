@@ -2,55 +2,108 @@
 
     $(function ()
     {
-        var content = $('#Content')
+        var htmlMode
+        var content = $('#view-render')
+        //switchToRenderMode(true)
+
         document.getElementById("code-block-btn").onclick = function (event) {
-            encaseText(content, '<pre class="language-markup"><code>', '</code></pre>')
+            doSurround('code')
+            doSurround('pre')
         }
         document.getElementById("code-btn").onclick = function (event) {
-            encaseText(content, '<code>', '</code>')
+            doSurround('code')
         }
 
         document.getElementById("h1-btn").onclick = function (event) {
-            encaseText(content, '<h1>', '</h1>')
+            doSurround('h1')
         }
 
         document.getElementById("h2-btn").onclick = function (event) {
-            encaseText(content, '<h2>', '</h2>')
+            doSurround('h2')
         }
 
         document.getElementById("h3-btn").onclick = function (event) {
-            encaseText(content, '<h3>', '</h3>')
+            doSurround('h3')
         }
 
         document.getElementById("h4-btn").onclick = function (event) {
-            encaseText(content, '<h4>', '</h4>')
+            doSurround('h4')
         }
 
         document.getElementById("bold-btn").onclick = function (event) {
-            encaseText(content, '<b>', '</b>')
+            doSurround('b')
         }
 
         document.getElementById("p-btn").onclick = function (event) {
-            encaseText(content, '<p>', '</p>')
+            doSurround('p')
         }
 
         document.getElementById("encode-btn").onclick = function (event) {
             content.encodeTags()
         }
 
+        document.getElementById("readmore-btn").onclick = function (event) {
+            surroundSelection()
+            //content.insertAtCaret('<readmore>--</readmore>')
+        }
+
+        document.getElementById("mode-btn").onclick = function (event) {
+            if (htmlMode) {
+                switchToRenderMode()
+                htmlMode = false;
+            }
+            else {
+                switchToHtmlMode()
+                htmlMode = true;
+            }
+        }
+
     })
 
+    function switchToRenderMode() {
+        $('#view-html').css("display", "none");
+        $('#view-render').css("display", "");
+    }
+
+    function switchToHtmlMode() {
+        //document.getElementById('view-render').te
+        $('#view-html').css("display", "");
+        $('#view-render').css("display", "none");
+    }
+
+    function doSurround(tag) {
+        if ($(document.getSelection().getRangeAt(0).startContainer.parentNode).closest('#view-render').length) {
+            surroundSelectionWithElement(tag)
+        }
+        else if ($(document.getSelection().getRangeAt(0).startContainer.parentNode).closest('#view-html').length) {
+            surroundSelectionTextNode('<' + tag + '>', '</' + tag + '>')
+        }
+
+    }
+
     //оборачиваем выбранный текстовый узел в тег span
-    function surroundSelection() {
-        var span = document.createElement("span");
-        span.style.fontWeight = "bold";
-        span.style.color = "green";
+    function surroundSelectionWithElement(elem) {
+        var elem_new = document.createElement(elem);
 
         if (window.getSelection) {
             var sel = window.getSelection();
             if (sel.rangeCount) {
                 var range = sel.getRangeAt(0).cloneRange();
-                range.surroundContents(span);
+                range.surroundContents(elem_new);
+                sel.removeAllRanges();
+                sel.addRange(range);
+            }
+        }
+    }
+
+    function surroundSelectionTextNode(leftNode, rightNode) {
+        if (window.getSelection) {
+            var sel = window.getSelection();
+            var text_node = document.createTextNode(leftNode + sel + rightNode);
+            if (sel.rangeCount) {
+                var range = sel.getRangeAt(0).cloneRange();
+                range.deleteContents();
+                range.insertNode(text_node);
                 sel.removeAllRanges();
                 sel.addRange(range);
             }
@@ -61,17 +114,27 @@
         elem.encaseHighlithed(left, right)
     }
 
-    function keyCode(event) {
+    function saveFromHtmlEditor(event) {
         var x = event.keyCode;
         if (x === 83 && event.ctrlKey) {
             event.preventDefault()
-            savePostContent()
+            var contentFromHtmlEditor = $("#Content").val()
+            savePostContent(contentFromHtmlEditor)
         }
     }
 
-    function savePostContent() {
-        var send = { id: @Model.PostId, content: $("#Content").val() }
-        $.post('@Url.Action("SaveContent", "Post")', send, function (data) { } )
+    function saveFromRenderEditor(event) {
+        var x = event.keyCode;
+        if (x === 83 && event.ctrlKey) {
+            event.preventDefault()
+            var contentFromRenderEditor = $('#view-render').html()
+            savePostContent(contentFromRenderEditor)
+        }
+    }
+
+    function savePostContent(content) {
+        var send = { id: @Model.PostId, content: content }
+        $.post('@Url.Action("SaveContent", "Post")', send, function (data) { })
     }
 
     $.fn.insertAtCaret = function (text) {
@@ -116,7 +179,7 @@
                 scrollTop = this.scrollTop;
                 this.value = this.value.substring(0, endPos) + rightText + this.value.substring(endPos, this.value.length);
                 this.value = this.value.substring(0, startPos) + leftText + this.value.substring(startPos, this.value.length);
-                this.focus();
+                //this.focus();
                 this.scrollTop = scrollTop;
             } /*else {*/
             //    // IE input[type=text] and other browsers

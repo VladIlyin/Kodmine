@@ -6,19 +6,13 @@
     ViewData["Title"] = "Edit";
 }
 
-@{ await Html.RenderPartialAsync("~/Views/Post/Edit/_Script.cshtml"); }
-
-<environment include="Development">
-    <link href="~/css/post/edit.css" rel="stylesheet" />
-</environment>
-
 <h3>Редактирование</h3>
 
 <hr />
 
 <script>
     $(function () {
-        $('#viewRender, #viewHTML').each(function () {
+        $('#view-render, #view-html').each(function () {
             this.contentEditable = true;
         });
     })
@@ -88,6 +82,7 @@
                     <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal">
                         Загрузить изображение
                     </button>
+                    <button type="button" id="mode-btn" class="btn"><></button>
                     <button type="button" id="p-btn" class="btn">P</button>
                     <button type="button" id="h1-btn" class="btn">H1</button>
                     <button type="button" id="h2-btn" class="btn">H2</button>
@@ -98,11 +93,14 @@
                     <button type="button" id="code-btn" class="btn">Code</button>
                     <button type="button" id="code-block-btn" class="btn">CodeBlock</button>
                     <button type="button" id="encode-btn" class="btn">Encode</button>
+                    <button type="button" id="readmore-btn" class="btn">RM</button>
                 </div>
                 <br />
-                <textarea name="Content" id="Content" class="form-control" rows="20" onkeydown="keyCode(event)">@Model.Content</textarea>
-                <div id="viewHTML" style="padding:5px;">@Html.Raw(Model.Content)</div>
-                <div id="viewRender" style="background-color:black;color:white;border: 1px solid #ccc;padding: 5px;">@Model.Content</div>
+                @*<div id="view-render">@Html.Raw(Model.Content)</div>*@
+                <div id="view-render" style="padding:5px;" onkeydown="saveFromRenderEditor(event);">@Html.Raw(Model.Content)</div>
+                <div id="view-html" style="display:none;">
+                    <textarea name="Content" id="Content" class="form-control" rows="20" style="background-color:black;color:white;border: 1px solid #ccc;padding: 5px;" onkeydown="saveFromHtmlEditor(event);">@Model.Content</textarea>
+                </div>
                 <span asp-validation-for="Content" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -112,20 +110,21 @@
     </div>
 </form>
 
-@*<a href="@Url.Action("SaveContent", "Post", new { content = "123", id = "14" })" data-ajax="true" data-ajax-mode="replace" data-ajax-failure="showError" data-ajax-update="#post_addr_form" id="pa_load_form">Cecwecw</a>*@
-<div id="post_addr_form"></div>
+@*<a href="@Url.Action("SaveContent", "Post", new { content = "123", id = "14" })" data-ajax="true" data-ajax-mode="replace" data-ajax-failure="showError" data-ajax-update="#post_addr_form" id="pa_load_form">Cecwecw</a>
+<div id="post_addr_form"></div>*@
 
-<div>
+@*<div>
     <a asp-action="Index">Назад</a>
-</div>
+</div>*@
 
 @*@using (Ajax.BeginForm("EmployeeMaster", "Home", new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "divEmp" }))
     {
         //form content
     }*@
 
-@{await Html.RenderPartialAsync("~/Views/Post/Edit/_ImageLoad_Modal.cshtml"); }
+@{ await Html.RenderPartialAsync("~/Views/Post/Edit/_ImageLoad_Modal.cshtml"); }
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    @{ await Html.RenderPartialAsync("~/Views/Post/Edit/Script.cshtml"); }
 }
