@@ -4,10 +4,9 @@
     {
         var htmlMode
         var content = $('#view-render')
-        //switchToRenderMode(true)
 
         document.getElementById("code-block-btn").onclick = function (event) {
-            doSurround('code')
+            doSurround('code', 'class', 'language-markup')
             doSurround('pre')
         }
         document.getElementById("code-btn").onclick = function (event) {
@@ -32,6 +31,10 @@
 
         document.getElementById("bold-btn").onclick = function (event) {
             doSurround('b')
+        }
+
+        document.getElementById("italic-btn").onclick = function (event) {
+            doSurround('em')
         }
 
         document.getElementById("p-btn").onclick = function (event) {
@@ -61,29 +64,55 @@
     })
 
     function switchToRenderMode() {
-        $('#view-html').css("display", "none");
-        $('#view-render').css("display", "");
+        SetDisabledButtonGroupForEdit(false)
+        SetRenderModeValue()
+        $('#view-html').css("display", "none")
+        $('#view-render').css("display", "")
     }
 
     function switchToHtmlMode() {
-        //document.getElementById('view-render').te
-        $('#view-html').css("display", "");
-        $('#view-render').css("display", "none");
+        SetDisabledButtonGroupForEdit(true)
+        SetHtmlModeValue()
+        SetTextAreaHeight()
+        $('#view-html').css("display", "")
+        $('#view-render').css("display", "none")
     }
 
-    function doSurround(tag) {
-        if ($(document.getSelection().getRangeAt(0).startContainer.parentNode).closest('#view-render').length) {
-            surroundSelectionWithElement(tag)
-        }
-        else if ($(document.getSelection().getRangeAt(0).startContainer.parentNode).closest('#view-html').length) {
-            surroundSelectionTextNode('<' + tag + '>', '</' + tag + '>')
-        }
+    function SetTextAreaHeight() {
+        var height = $('#view-render').outerHeight()
+        $('#Content').css("height", height + "px")
+    }
+
+    function SetDisabledButtonGroupForEdit(disable) {
+        $("#btn-group-edit *").prop('disabled', disable)
+    }
+
+    function SetHtmlModeValue() {
+        var contentFromRender = $("#view-render").html()
+        $("#Content").val(contentFromRender)
+    }
+
+    function SetRenderModeValue() {
+        var contentFromHtml = $("#Content").val()
+        $("#view-render").html(contentFromHtml)
+    }
+
+    function doSurround(tag, attr, val) {
+        //if ($(document.getSelection().getRangeAt(0).startContainer.parentNode).closest('#view-render').length) {
+        surroundSelectionWithElement(tag, attr, val)
+        //}
+        //else if ($(document.getSelection().getRangeAt(0).startContainer.parentNode).closest('#view-html').length) {
+        //    surroundSelectionTextNode('<' + tag + '>', '</' + tag + '>')
+        //}
 
     }
 
-    //оборачиваем выбранный текстовый узел в тег span
-    function surroundSelectionWithElement(elem) {
+    //оборачиваем выбранный узел в тег
+    function surroundSelectionWithElement(elem, attr, val) {
         var elem_new = document.createElement(elem);
+
+        if (attr)
+            elem_new.setAttribute(attr, val);
 
         if (window.getSelection) {
             var sel = window.getSelection();

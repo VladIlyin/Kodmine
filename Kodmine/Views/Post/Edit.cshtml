@@ -79,21 +79,23 @@
                     <a href="#" onclick="savePostContent()">
                         <span class="glyphicon glyphicon-floppy-save"></span>
                     </a>
-                    <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal">
-                        Загрузить изображение
-                    </button>
                     <button type="button" id="mode-btn" class="btn"><></button>
-                    <button type="button" id="p-btn" class="btn">P</button>
-                    <button type="button" id="h1-btn" class="btn">H1</button>
-                    <button type="button" id="h2-btn" class="btn">H2</button>
-                    <button type="button" id="h3-btn" class="btn">H3</button>
-                    <button type="button" id="h4-btn" class="btn">H4</button>
-                    <button type="button" id="bold-btn" class="btn">B</button>
-                    <button class="btn">I</button>
-                    <button type="button" id="code-btn" class="btn">Code</button>
-                    <button type="button" id="code-block-btn" class="btn">CodeBlock</button>
-                    <button type="button" id="encode-btn" class="btn">Encode</button>
-                    <button type="button" id="readmore-btn" class="btn">RM</button>
+                    <span id="btn-group-edit">
+                        <button type="button" id="p-btn" class="btn">P</button>
+                        <button type="button" id="h1-btn" class="btn">H1</button>
+                        <button type="button" id="h2-btn" class="btn">H2</button>
+                        <button type="button" id="h3-btn" class="btn">H3</button>
+                        <button type="button" id="h4-btn" class="btn">H4</button>
+                        <button type="button" id="bold-btn" class="btn">B</button>
+                        <button id="italic-btn" class="btn">I</button>
+                        <button type="button" id="code-btn" class="btn">Code</button>
+                        <button type="button" id="code-block-btn" class="btn">CodeBlock</button>
+                        <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal">
+                            Image
+                        </button>
+                        <button type="button" id="encode-btn" class="btn">Encode</button>
+                        <button type="button" id="readmore-btn" class="btn">RM</button>
+                    </span>
                 </div>
                 <br />
                 @*<div id="view-render">@Html.Raw(Model.Content)</div>*@
