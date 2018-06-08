@@ -22,7 +22,7 @@ namespace Kodmine
 {
     public class Startup
     {
-
+        public static IServiceProvider ServiceMan { get; private set; }
         public IConfiguration Configuration { get; }
 
         public Startup(IConfiguration configuration)
@@ -68,6 +68,8 @@ namespace Kodmine
             services.AddScoped<IPostRepository, PostRepository>();
             services.AddScoped<IPostTagRepository, PostTagRepository>();
             services.AddScoped<IRubricRepository, RubricRepository>();
+
+            ServiceMan = services.BuildServiceProvider();
 
             //var r = ServiceMan.GetService<IRubricRepository>();
             //services.AddSingleton<DynamicLayoutService>(s => {

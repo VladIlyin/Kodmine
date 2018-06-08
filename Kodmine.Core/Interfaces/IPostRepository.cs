@@ -11,5 +11,6 @@ namespace Kodmine.Core.Interfaces
         void SaveContent(int id, string content);
         void SetTopic(int id, int value);
         IEnumerable<Post> PostListMainPage(int take);
+        IEnumerable<Post> GetPostByRubric(int rubId, int take);
     }
 }

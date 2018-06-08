@@ -25,6 +25,11 @@ namespace Kodmine.DAL.Repository
             return Get().Where(i => i.PostId == id).FirstOrDefault();
         }
 
+        public IEnumerable<Post> GetPostByRubric(int rubId, int take)
+        {
+            return db.Posts.Take(take).Where(x => x.RubricId == rubId).OrderByDescending(ord => ord.CreateDate).Include(x => x.PostTags).ThenInclude(y => y.Tag);
+        }
+
         public IEnumerable<Post> PostListMainPage(int take)
         {
             return db.Posts.Take(take).OrderByDescending(ord => ord.CreateDate).Include(x => x.PostTags).ThenInclude(y => y.Tag);

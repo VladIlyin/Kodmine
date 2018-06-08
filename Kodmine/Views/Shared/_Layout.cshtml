@@ -1,5 +1,7 @@
 ﻿@using Kodmine.Services;
 @using Kodmine.Model.Models;
+@using Kodmine.Core.Interfaces;
+@using Microsoft.Extensions.DependencyInjection;
 @using Newtonsoft.Json;
 
 <!DOCTYPE html>
@@ -50,12 +52,12 @@
 </head>
 <body>
     @{
-        IEnumerable<Rubric> rubList = null;
+        IEnumerable<Rubric> rubList = Startup.ServiceMan.GetService<IRubricRepository>().Get();
 
         if (!TempData.Keys.Contains("rubricList"))
         {
             if (rubList != null)
-            { 
+            {
                 TempData.Keep("rubricList");
                 TempData["rubricList"] = JsonConvert.SerializeObject(rubList);
             }
@@ -92,40 +94,40 @@
             </div>
             <div class="col-1">
                 @*<ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">
-                            <span><img class="logo_tech" src="~/images/logo/c-sharp.png" /></span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <span>
-                                <img class="logo_tech" src="~/images/logo/js.png" />
-                            </span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <span>
-                                <img class="logo_tech" src="~/images/logo/asp-net.png" />
-                            </span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <span>
-                                <img class="logo_tech" src="~/images/logo/html.png" />
-                            </span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <span>
-                                <img class="logo_tech" src="~/images/logo/sql.png" />
-                            </span>
-                        </a>
-                    </li>
-                </ul>*@
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">
+                                <span><img class="logo_tech" src="~/images/logo/c-sharp.png" /></span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span>
+                                    <img class="logo_tech" src="~/images/logo/js.png" />
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span>
+                                    <img class="logo_tech" src="~/images/logo/asp-net.png" />
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span>
+                                    <img class="logo_tech" src="~/images/logo/html.png" />
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span>
+                                    <img class="logo_tech" src="~/images/logo/sql.png" />
+                                </span>
+                            </a>
+                        </li>
+                    </ul>*@
             </div>
         </div>
         <hr />

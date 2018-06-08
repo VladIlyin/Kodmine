@@ -6,7 +6,8 @@
         foreach (var rub in Model)
         {
             <li class="nav-item">
-                <a class="nav-link active" href="#">@(rub.Name)</a>
+                <a class="nav-link active" asp-controller="Home"
+                   asp-action="PostRubric" asp-route-id="@rub.RubricId" >@(rub.Name)</a>
             </li>
         }
     }
