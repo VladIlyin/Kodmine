@@ -10,17 +10,10 @@
 
 <hr />
 
-<script>
-    $(function () {
-        $('#view-render, #view-html').each(function () {
-            this.contentEditable = true;
-        });
-    })
-</script>
-
 <form asp-action="Edit">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input type="hidden" asp-for="PostId" />
+    <input type="hidden" asp-for="RubricId" />
     <div class="row">
         <div class="col-md-7">
             <div class="form-group">
@@ -47,7 +40,7 @@
                     <option id="0" hidden disabled selected> -- Выберите рубрику -- </option>
                     @{
 
-                        foreach (TopicViewModel topic in ViewBag.rubListViewModel ?? new List<TopicViewModel>())
+                        foreach (TopicViewModel topic in (ViewBag.rubListViewModel ?? new List<TopicViewModel>()))
                         {
                             if (topic.Selected)
                             {
@@ -99,7 +92,7 @@
                 </div>
                 <br />
                 @*<div id="view-render">@Html.Raw(Model.Content)</div>*@
-                <div id="view-render" style="padding:5px;" onkeydown="saveFromRenderEditor(event);">@Html.Raw(Model.Content)</div>
+                <div id="view-render" style="padding:5px;" contentEditable="true" onkeydown="saveFromRenderEditor(event);">@Html.Raw(Model.Content)</div>
                 <div id="view-html" style="display:none;">
                     <textarea name="Content" id="Content" class="form-control" rows="20" style="background-color:black;color:white;border: 1px solid #ccc;padding: 5px;" onkeydown="saveFromHtmlEditor(event);">@Model.Content</textarea>
                 </div>

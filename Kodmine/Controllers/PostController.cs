@@ -40,22 +40,25 @@ namespace Kodmine.Controllers
         public override ActionResult Edit(int id)
         {
             var model = repository.GetById(id);
+
+            if (model == null)
+            {
+                ViewBag.Mesage = "Пост не найден";
+                return View(@"~/Views/Error/Index.shtml");
+            }
+
             var tagIdList = model.PostTags.Select(x => x.TagId);
 
             //TODO: использовать asp-items как в Create
-            var tagList = tagRepo.Get(); //.OrderBy(x => x.Name);
+            var tagList = tagRepo.Get();
             var tagListViewModel = from t in tagList
-                                       //where tagIdList.Contains(t.TagId)
                                    orderby t.Name
                                    select new TagViewModel { Id = t.TagId, Name = t.Name, Selected = tagIdList.Contains(t.TagId) };
 
-            //ViewBag.TagIdListOnThisPost = tagListOnThisPost.Select(x => x.TagId);
             ViewBag.TagListViewModel = tagListViewModel;
-            //ViewBag.TagList = tagList;
 
             var rubList = rubRepo.Get();
             var rubListViewModel = from t in rubList
-                                       //where tagIdList.Contains(t.TagId)
                                    orderby t.Name
                                    select new TopicViewModel { Id = t.RubricId, Name = t.Name, Selected = t.RubricId == model.RubricId };
 

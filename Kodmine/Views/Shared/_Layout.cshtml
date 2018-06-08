@@ -54,7 +54,6 @@
 
         if (!TempData.Keys.Contains("rubricList"))
         {
-            rubList = DynamicLayoutService.RubricList;
             if (rubList != null)
             { 
                 TempData.Keep("rubricList");
@@ -92,7 +91,7 @@
                 @RenderBody()
             </div>
             <div class="col-1">
-                <ul class="nav flex-column">
+                @*<ul class="nav flex-column">
                     <li class="nav-item">
                         <a class="nav-link active" href="#">
                             <span><img class="logo_tech" src="~/images/logo/c-sharp.png" /></span>
@@ -119,9 +118,6 @@
                             </span>
                         </a>
                     </li>
-                    @*<li class="nav-item">
-                            <a class="nav-link" href="#">CSS</a>
-                        </li>*@
                     <li class="nav-item">
                         <a class="nav-link" href="#">
                             <span>
@@ -129,7 +125,7 @@
                             </span>
                         </a>
                     </li>
-                </ul>
+                </ul>*@
             </div>
         </div>
         <hr />

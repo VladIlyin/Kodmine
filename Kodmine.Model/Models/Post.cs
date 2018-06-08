@@ -19,24 +19,10 @@ namespace Kodmine.Model.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime CreateDate { get; set; }
-
         [NotMapped]
-        public string ContentShortened
-        {
-            get
-            {
-                if (Content?.Length > 200)
-                    return Content.Substring(0, 200);
-                else
-                    return Content;
-            }
-        }
-
-        //[ForeignKey("Rubric")]
+        public string ContentShortened { get; set; }
         public int RubricId { get; set; }
-
         public virtual Rubric Rubric { get; set; }
-
         public virtual ICollection<PostTag> PostTags { get; set; }
     }
 }

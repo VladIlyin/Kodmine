@@ -8,7 +8,7 @@
             @{
                 //IEnumerable<int> tagIdList = ViewBag.TagIdListOnThisPost;
 
-                foreach (TagViewModel tag in ViewBag.TagListViewModel ?? new List<TagViewModel>())
+                foreach (TagViewModel tag in (ViewBag.TagListViewModel ?? new List<TagViewModel>()))
                 {
                     if (tag.Selected)
                     {
@@ -27,7 +27,7 @@
 <div class="col-md-9 align-bottom tagList">
     <label class="control-label">&nbsp;</label>
     <div class="post-tag-list">
-        @foreach (TagViewModel tag in ViewBag.TagListViewModel)
+        @foreach (TagViewModel tag in (ViewBag.TagListViewModel ?? new List<TagViewModel>()))
         {
             if (tag.Selected)
             {

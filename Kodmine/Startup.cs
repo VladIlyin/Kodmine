@@ -16,17 +16,23 @@ using Kodmine.Core;
 using Kodmine.Core.Interfaces;
 using Kodmine.DAL.Repository;
 using Kodmine.Extensions;
+using System.IO;
 
 namespace Kodmine
 {
     public class Startup
     {
 
-        public Startup(IConfiguration configuration) => Configuration = configuration;
-
         public IConfiguration Configuration { get; }
 
-        public static IServiceProvider ServiceMan { get; private set; }
+        public Startup(IConfiguration configuration)
+        {
+            var builder = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json");
+
+            Configuration = builder.Build();
+        }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -55,6 +61,7 @@ namespace Kodmine
             // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=532713
             //services.AddSingleton<IEmailSender, EmailSender>();
 
+            services.AddSingleton<IConfiguration>(Configuration);
             //Everything related to the db context should live only within one request, 
             //so it should be scoped
             services.AddScoped<ITagRepository, TagRepository>();
@@ -62,7 +69,6 @@ namespace Kodmine
             services.AddScoped<IPostTagRepository, PostTagRepository>();
             services.AddScoped<IRubricRepository, RubricRepository>();
 
-            ServiceMan = services.BuildServiceProvider();
             //var r = ServiceMan.GetService<IRubricRepository>();
             //services.AddSingleton<DynamicLayoutService>(s => {
             //    return new DynamicLayoutService(r);
