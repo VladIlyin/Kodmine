@@ -1,25 +1,30 @@
 ﻿using Kodmine.Controllers.Base;
 using Kodmine.Core.Interfaces;
+using Kodmine.Helpers;
 using Kodmine.Model.Models;
 using Kodmine.ViewModel.Tag;
 using Kodmine.ViewModel.Topic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Configuration;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Kodmine.Controllers
 {
     public class PostController : ControllerCRUD<Post>
     {
+		private IConfiguration configuration;
         private readonly IPostRepository postRepo;
         private readonly IPostTagRepository postTagRepo;
         private readonly ITagRepository tagRepo;
         private readonly IRubricRepository rubRepo;
 
-        public PostController(IPostRepository postRepo, 
+        public PostController(IConfiguration configuration,
+								IPostRepository postRepo, 
                                 ITagRepository tagRepo, 
                                 IPostTagRepository postTagRepo,
                                 IRubricRepository rubRepo) : base(postRepo)
@@ -28,6 +33,7 @@ namespace Kodmine.Controllers
             this.postTagRepo = postTagRepo;
             this.tagRepo = tagRepo;
             this.rubRepo = rubRepo;
+			this.configuration = configuration;
         }
 
         public override ActionResult Create()
@@ -35,6 +41,16 @@ namespace Kodmine.Controllers
             ViewBag.rubListViewModel = from t in rubRepo.Get()
                                        select new SelectListItem() { Value = t.RubricId.ToString(), Text = t.Name };
             return View();
+        }
+
+        public ActionResult CleanContent(string text)
+        {
+            foreach (var item in SettingsHelper.GetHtmlCleanerRegex(configuration))
+            {
+                text = Regex.Replace(text, item.Key, item.Value);
+            }
+
+            return Json(text);
         }
 
         public override ActionResult Edit(int id)
@@ -46,6 +62,8 @@ namespace Kodmine.Controllers
                 ViewBag.Mesage = "Пост не найден";
                 return View(@"~/Views/Error/Index.shtml");
             }
+
+            //var regExHtmlCleaner = SettingsHelper.GetHtmlCleanerRegex(configuration);
 
             var tagIdList = model.PostTags.Select(x => x.TagId);
 

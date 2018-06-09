@@ -56,9 +56,11 @@
             content.encodeTags()
         }
 
-        document.getElementById("readmore-btn").onclick = function (event) {
-            surroundSelection()
-            //content.insertAtCaret('<readmore>--</readmore>')
+        document.getElementById("clean-btn").onclick = function (event) {
+            var send = { text: $("#view-render").html()}
+            $.post('@Url.Action("CleanContent", "Post")', send, function (data) {
+                $("#view-render").html(data)
+             })
         }
 
         document.getElementById("mode-btn").onclick = function (event) {

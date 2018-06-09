@@ -11,9 +11,10 @@ using System;
 namespace Kodmine.DAL.Migrations
 {
     [DbContext(typeof(KodmineDbContext))]
-    partial class KodmineDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180609092141_AddFK")]
+    partial class AddFK
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

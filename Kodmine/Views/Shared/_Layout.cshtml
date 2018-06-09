@@ -52,19 +52,18 @@
 </head>
 <body>
     @{
-        IEnumerable<Rubric> rubList = Startup.ServiceMan.GetService<IRubricRepository>().Get();
-
-        if (!TempData.Keys.Contains("rubricList"))
+        IEnumerable<Rubric> rubList;
+        if (TempData.Keys.Contains("rubricList"))
         {
-            if (rubList != null)
-            {
-                TempData.Keep("rubricList");
-                TempData["rubricList"] = JsonConvert.SerializeObject(rubList);
-            }
+            rubList = JsonConvert.DeserializeObject<IEnumerable<Rubric>>(TempData.Peek("rubricList").ToString());
         }
         else
         {
-            rubList = JsonConvert.DeserializeObject<IEnumerable<Rubric>>(TempData.Peek("rubricList").ToString());
+            rubList = Startup.ServiceMan.GetService<IRubricRepository>().Get();
+            if (rubList != null)
+            {
+                TempData["rubricList"] = JsonConvert.SerializeObject(rubList);
+            }
         }
     }
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -86,7 +85,7 @@
             <div class="col-2">
                 @if (rubList != null)
                 {
-                    @await Html.PartialAsync("_Rubric", rubList)
+                    @Html.Partial("_Rubric", rubList)
                 }
             </div>
             <div class="col-9">

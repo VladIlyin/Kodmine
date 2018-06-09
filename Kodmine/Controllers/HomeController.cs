@@ -20,7 +20,7 @@ namespace Kodmine.Controllers
             this.postRepo = postRepo;
             this.rubricRepo = rubricRepo;
             this.configuration = configuration;
-            this.take = Convert.ToInt32(configuration["postMainPageCount"]);
+            this.take = Convert.ToInt32(configuration["PostPageCount"]);
         }
 
         public IActionResult Index()
