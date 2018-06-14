@@ -20,9 +20,6 @@
     <None Remove="Pages\**" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Remove="Data\ApplicationDbContext.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <None Remove="Views\Post\Edit\style.css" />
   </ItemGroup>
   <ItemGroup>
