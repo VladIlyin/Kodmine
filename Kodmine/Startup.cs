@@ -44,9 +44,9 @@ namespace Kodmine
             //services.AddDbContext<ApplicationDbContext>(options =>
             //    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            //services.AddIdentity<ApplicationUser, IdentityRole>()
-            //    .AddEntityFrameworkStores<KodmineDbContext>()
-            //    .AddDefaultTokenProviders();
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<KodmineDbContext>()
+                .AddDefaultTokenProviders();
 
             services.AddMvc();
             //.AddRazorPagesOptions(options =>
@@ -54,6 +54,11 @@ namespace Kodmine
             //    options.Conventions.AuthorizeFolder("/Account/Manage");
             //    options.Conventions.AuthorizePage("/Account/Logout");
             //});
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("PostEdit", policy => policy.RequireRole("Administrator"));
+            });
 
             services.AddSession();
 

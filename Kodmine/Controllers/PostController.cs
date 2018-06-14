@@ -4,6 +4,7 @@ using Kodmine.Helpers;
 using Kodmine.Model.Models;
 using Kodmine.ViewModel.Tag;
 using Kodmine.ViewModel.Topic;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -53,6 +54,7 @@ namespace Kodmine.Controllers
             return Json(text);
         }
 
+        [Authorize(Policy = "PostEdit")]
         public override ActionResult Edit(int id)
         {
             var model = repository.GetById(id);

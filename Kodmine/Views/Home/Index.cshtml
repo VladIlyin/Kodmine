@@ -1,4 +1,10 @@
-﻿@model IEnumerable<Kodmine.Model.Models.Post>
+﻿@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+@model IEnumerable<Kodmine.Model.Models.Post>
+
+@{
+    ViewBag.CanEditPost = (await AuthorizationService.AuthorizeAsync(User, "PostEdit")).Succeeded;
+}
 
 @foreach (var post in Model)
 {
