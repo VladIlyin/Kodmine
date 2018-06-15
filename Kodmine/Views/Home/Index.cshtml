@@ -3,7 +3,7 @@
 @model IEnumerable<Kodmine.Model.Models.Post>
 
 @{
-    ViewBag.CanEditPost = (await AuthorizationService.AuthorizeAsync(User, "PostEdit")).Succeeded;
+//ViewBag.CanEditPost = (await AuthorizationService.AuthorizeAsync(User, "PostEdit")).Succeeded;
 }
 
 @foreach (var post in Model)

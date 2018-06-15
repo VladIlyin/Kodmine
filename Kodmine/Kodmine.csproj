@@ -20,6 +20,10 @@
     <None Remove="Pages\**" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Remove="Data\ApplicationDbContext.cs" />
+    <Compile Remove="Data\ApplicationUser.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="Views\Post\Edit\style.css" />
   </ItemGroup>
   <ItemGroup>
@@ -56,6 +60,7 @@
     <ProjectReference Include="..\Kodmine.Model\Kodmine.Model.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Data\" />
     <Folder Include="wwwroot\images_post\" />
   </ItemGroup>
 </Project>
