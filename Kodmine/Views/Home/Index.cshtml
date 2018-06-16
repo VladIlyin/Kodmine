@@ -1,9 +1,12 @@
 ﻿@using Microsoft.AspNetCore.Authorization
+@using Kodmine.DAL
 @inject IAuthorizationService AuthorizationService
+@*@inject UserManager<System.Security.Claims.ClaimsPrincipal> UserManager*@
 @model IEnumerable<Kodmine.Model.Models.Post>
 
 @{
-//ViewBag.CanEditPost = (await AuthorizationService.AuthorizeAsync(User, "PostEdit")).Succeeded;
+    ViewBag.CanEditPost = (await AuthorizationService.AuthorizeAsync(User, "PostEdit")).Succeeded;
+    //ViewBag.CanEditPost = (await UserManager.IsInRoleAsync(User, "Administrator"));
 }
 
 @foreach (var post in Model)

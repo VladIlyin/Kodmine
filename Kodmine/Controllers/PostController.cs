@@ -54,7 +54,7 @@ namespace Kodmine.Controllers
             return Json(text);
         }
 
-        //[Authorize(Policy = "PostEdit")]
+        [Authorize(Roles = "Administrator")]
         public override ActionResult Edit(int id)
         {
             var model = repository.GetById(id);

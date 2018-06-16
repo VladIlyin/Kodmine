@@ -24,6 +24,9 @@
     <Compile Remove="Data\ApplicationUser.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Remove="Areas\Admin\Views\Role\Create.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="Views\Post\Edit\style.css" />
   </ItemGroup>
   <ItemGroup>
@@ -60,6 +63,8 @@
     <ProjectReference Include="..\Kodmine.Model\Kodmine.Model.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Views\Role\" />
     <Folder Include="Data\" />
     <Folder Include="wwwroot\images_post\" />
   </ItemGroup>
