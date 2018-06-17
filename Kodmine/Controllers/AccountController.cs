@@ -48,6 +48,13 @@ namespace Kodmine.Controllers
 
         [HttpGet]
         [AllowAnonymous]
+        public IActionResult Lockout()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
         public IActionResult Register(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
@@ -66,7 +73,7 @@ namespace Kodmine.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    //_logger.LogInformation("User created a new account with password.");
+                    _logger.LogInformation("User created a new account with password.");
 
                     //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     //var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
@@ -74,7 +81,7 @@ namespace Kodmine.Controllers
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation("User created a new account with password.");
-                    return RedirectToAction(nameof(HomeController.Index), "Home");
+                    return RedirectToLocal(returnUrl);
                 }
                 //AddErrors(result);
             }
@@ -104,7 +111,7 @@ namespace Kodmine.Controllers
                 if (result.Succeeded)
                 {
                     _logger.LogInformation(1, "User logged in.");
-                    return RedirectToAction(nameof(HomeController.Index), "Home");
+                    return RedirectToLocal(returnUrl);
                 }
                 //if (result.RequiresTwoFactor)
                 //{
@@ -113,7 +120,7 @@ namespace Kodmine.Controllers
                 if (result.IsLockedOut)
                 {
                     _logger.LogWarning(2, "User account locked out.");
-                    return View("Lockout");
+                    return RedirectToAction(nameof(Lockout));
                 }
                 else
                 {
@@ -132,7 +139,20 @@ namespace Kodmine.Controllers
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
-            return RedirectToPage("/Index");
+            return RedirectToAction(nameof(HomeController.Index), "Home");
         }
+
+        private IActionResult RedirectToLocal(string returnUrl)
+        {
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+            else
+            {
+                return RedirectToAction(nameof(HomeController.Index), "Home");
+            }
+        }
+
     }
 }

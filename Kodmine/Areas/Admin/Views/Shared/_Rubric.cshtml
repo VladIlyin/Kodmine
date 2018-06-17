@@ -1,0 +1,18 @@
+﻿@model IEnumerable<Kodmine.Model.Models.Rubric>
+
+<ul class="nav flex-column">
+    @if (Model != null)
+    {
+        foreach (var rub in Model)
+        {
+            <li class="nav-item">
+                <a class="nav-link active" asp-controller="Home"
+                   asp-action="PostRubric" asp-route-id="@rub.RubricId" >@(rub.Name)</a>
+            </li>
+        }
+    }
+</ul>
+
+@*<li class="nav-item">
+    <a class="nav-link disabled" href="#"></a>
+</li>*@

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Kodmine.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class RoleController : Controller
     {
 
@@ -27,12 +28,12 @@ namespace Kodmine.Areas.Admin.Controllers
             return View();
         }
 
-        //public IActionResult Create()
-        //{
-        //    return View();
-        //}
+        public IActionResult Create()
+        {
+            return View();
+        }
 
-        //[HttpPost]
+        [HttpPost]
         public async Task<IActionResult> Create(string roleName)
         {
             var isRoleExists = await _roleManager.RoleExistsAsync(roleName);

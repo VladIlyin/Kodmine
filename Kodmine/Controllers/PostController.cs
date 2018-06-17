@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
+using System;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -16,6 +17,7 @@ using System.Threading.Tasks;
 
 namespace Kodmine.Controllers
 {
+    
     public class PostController : ControllerCRUD<Post>
     {
 		private IConfiguration configuration;
@@ -37,6 +39,7 @@ namespace Kodmine.Controllers
 			this.configuration = configuration;
         }
 
+        [Authorize(Policy = "PostCreatePolicy")]
         public override ActionResult Create()
         {
             ViewBag.rubListViewModel = from t in rubRepo.Get()
@@ -44,17 +47,23 @@ namespace Kodmine.Controllers
             return View();
         }
 
-        public ActionResult CleanContent(string text)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Policy = "PostCreatePolicy")]
+        public override ActionResult Create(Post post)
         {
-            foreach (var item in SettingsHelper.GetHtmlCleanerRegex(configuration))
+            try
             {
-                text = Regex.Replace(text, item.Key, item.Value);
+                repository.Create(post);
+                return RedirectToAction(nameof(Index));
             }
-
-            return Json(text);
+            catch
+            {
+                return View();
+            }
         }
 
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Policy = "PostEditPolicy")]
         public override ActionResult Edit(int id)
         {
             var model = repository.GetById(id);
@@ -87,12 +96,25 @@ namespace Kodmine.Controllers
             return View(model);
         }
 
-        public ActionResult ViewPost(int id)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Policy = "PostEditPolicy")]
+        public override ActionResult Edit(int id, Post post)
         {
-            var post = repository.GetById(id);
-            return View(post);
+            //TODO кнопка сохранить без возврата на страницу Index
+            try
+            {
+                repository.Update(post);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = ex.GetBaseException().Message;
+                return View(nameof(Index));
+            }
         }
 
+        [Authorize(Policy = "PostEditPolicy")]
         public ActionResult SaveContent(int id, string content)
         {
             ((IPostRepository)repository).SaveContent(id, content);
@@ -100,6 +122,7 @@ namespace Kodmine.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "PostEditPolicy")]
         public async Task<IActionResult> UploadImage(IFormFile images, int postId)
         {
             //TODO: в HTML оборачивать <img></img> в тег <figure> согласно HTML5
@@ -122,22 +145,41 @@ namespace Kodmine.Controllers
             return Json(path);
         }
 
+        [Authorize(Policy = "PostEditPolicy")]
         public IActionResult AddTag(int tagId, int postId)
         {
             postTagRepo.AddTagToPost(tagId, postId);
             return Json(true);
         }
 
+        [Authorize(Policy = "PostEditPolicy")]
         public IActionResult RemoveTag(int tagId, int postId)
         {
             postTagRepo.RemoveTagFromPost(tagId, postId);
             return Json(true);
         }
 
+        [Authorize(Policy = "PostEditPolicy")]
         public IActionResult SetTopic(int postId, int topicId)
         {
             postRepo.SetTopic(postId, topicId);
             return Json(true);
+        }
+
+        public ActionResult ViewPost(int id)
+        {
+            var post = repository.GetById(id);
+            return View(post);
+        }
+
+        public ActionResult CleanContent(string text)
+        {
+            foreach (var item in SettingsHelper.GetHtmlCleanerRegex(configuration))
+            {
+                text = Regex.Replace(text, item.Key, item.Value);
+            }
+
+            return Json(text);
         }
 
         private bool ValidImageExtension(string ext)
