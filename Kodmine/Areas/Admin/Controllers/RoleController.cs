@@ -4,12 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Kodmine.Areas.Admin.Models;
 using Kodmine.DAL;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Kodmine.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Policy = "AdminPolicy")]
     public class RoleController : Controller
     {
 

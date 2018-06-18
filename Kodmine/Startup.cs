@@ -91,6 +91,7 @@ namespace Kodmine
             {
                 options.AddPolicy("PostEditPolicy", policy => policy.RequireRole("Administrator"));
                 options.AddPolicy("PostCreatePolicy", policy => policy.RequireRole("Administrator"));
+                options.AddPolicy("AdminPolicy", policy => policy.RequireRole("Administrator"));
             });
 
             //services.AddSession();
