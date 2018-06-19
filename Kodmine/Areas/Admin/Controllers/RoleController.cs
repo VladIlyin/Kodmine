@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Kodmine.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Policy = "AdminPolicy")]
+    //[Authorize(Policy = "AdminPolicy")]
     public class RoleController : Controller
     {
 
@@ -36,14 +36,14 @@ namespace Kodmine.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(string roleName)
+        public async Task<IActionResult> Create(string name)
         {
-            var isRoleExists = await _roleManager.RoleExistsAsync(roleName);
+            var isRoleExists = await _roleManager.RoleExistsAsync(name);
 
             if (!isRoleExists)
             {
                 var role = new IdentityRole();
-                role.Name = roleName;
+                role.Name = name;
                 await _roleManager.CreateAsync(role);
             }
 

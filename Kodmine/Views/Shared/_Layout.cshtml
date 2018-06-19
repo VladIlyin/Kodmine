@@ -1,8 +1,9 @@
-﻿@using Kodmine.Services;
-@using Kodmine.Model.Models;
+﻿@using Kodmine.Model.Models;
 @using Kodmine.Core.Interfaces;
 @using Microsoft.Extensions.DependencyInjection;
 @using Newtonsoft.Json;
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
 
 <!DOCTYPE html>
 <html>
@@ -73,9 +74,12 @@
         </button>
         <div class="navbar-collapse collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav mr-4">
-                <li class="nav-item"><a class="nav-link" href="/admin">Админка</a></li>
+                @if ((await AuthorizationService.AuthorizeAsync(User, "PostPolicy")).Succeeded)
+                {
+                    <li class="nav-item"><a class="nav-link" href="/admin">Админка</a></li>
+                }
                 @*<li class="nav-item"><a class="nav-link" asp-controller="Tag" asp-action="Index">Теги</a></li>
-                <li class="nav-item"><a class="nav-link" asp-controller="Rubric" asp-action="Index">Рубрики</a></li>*@
+                    <li class="nav-item"><a class="nav-link" asp-controller="Rubric" asp-action="Index">Рубрики</a></li>*@
             </ul>
             @*@await Html.PartialAsync("_LoginPartial")*@
         </div>

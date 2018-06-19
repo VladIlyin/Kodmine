@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace Kodmine.Controllers
 {
-    
+    [Authorize(Policy = "PostPolicy")]
     public class PostController : ControllerCRUD<Post>
     {
 		private IConfiguration configuration;
@@ -39,7 +39,11 @@ namespace Kodmine.Controllers
 			this.configuration = configuration;
         }
 
-        [Authorize(Policy = "PostCreatePolicy")]
+        //public virtual ActionResult Index()
+        //{
+        //    return base.Index();
+        //}
+
         public override ActionResult Create()
         {
             ViewBag.rubListViewModel = from t in rubRepo.Get()
@@ -49,7 +53,6 @@ namespace Kodmine.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Policy = "PostCreatePolicy")]
         public override ActionResult Create(Post post)
         {
             try
@@ -63,7 +66,6 @@ namespace Kodmine.Controllers
             }
         }
 
-        [Authorize(Policy = "PostEditPolicy")]
         public override ActionResult Edit(int id)
         {
             var model = repository.GetById(id);
@@ -98,7 +100,6 @@ namespace Kodmine.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Policy = "PostEditPolicy")]
         public override ActionResult Edit(int id, Post post)
         {
             //TODO кнопка сохранить без возврата на страницу Index
@@ -114,7 +115,6 @@ namespace Kodmine.Controllers
             }
         }
 
-        [Authorize(Policy = "PostEditPolicy")]
         public ActionResult SaveContent(int id, string content)
         {
             ((IPostRepository)repository).SaveContent(id, content);
@@ -122,7 +122,6 @@ namespace Kodmine.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy = "PostEditPolicy")]
         public async Task<IActionResult> UploadImage(IFormFile images, int postId)
         {
             //TODO: в HTML оборачивать <img></img> в тег <figure> согласно HTML5
@@ -145,21 +144,18 @@ namespace Kodmine.Controllers
             return Json(path);
         }
 
-        [Authorize(Policy = "PostEditPolicy")]
         public IActionResult AddTag(int tagId, int postId)
         {
             postTagRepo.AddTagToPost(tagId, postId);
             return Json(true);
         }
 
-        [Authorize(Policy = "PostEditPolicy")]
         public IActionResult RemoveTag(int tagId, int postId)
         {
             postTagRepo.RemoveTagFromPost(tagId, postId);
             return Json(true);
         }
 
-        [Authorize(Policy = "PostEditPolicy")]
         public IActionResult SetTopic(int postId, int topicId)
         {
             postRepo.SetTopic(postId, topicId);
@@ -189,6 +185,20 @@ namespace Kodmine.Controllers
                     ext == ".png" || 
                     ext == ".bmp";
         }
+
+        //[Authorize(Policy = "PostEditPolicy")]
+        //public override ActionResult Delete(int id)
+        //{
+        //    return base.Delete(id);
+        //}
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //[Authorize(Policy = "PostEditPolicy")]
+        //public override ActionResult Delete(int id, Post collection)
+        //{
+        //    return base.Delete(id, collection);
+        //}
 
     }
 }

@@ -89,9 +89,8 @@ namespace Kodmine
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("PostEditPolicy", policy => policy.RequireRole("Administrator"));
-                options.AddPolicy("PostCreatePolicy", policy => policy.RequireRole("Administrator"));
-                options.AddPolicy("AdminPolicy", policy => policy.RequireRole("Administrator"));
+                options.AddPolicy("PostPolicy", policy => policy.RequireRole("administrator"));
+                options.AddPolicy("AdminPolicy", policy => policy.RequireRole("administrator"));
             });
 
             //services.AddSession();
@@ -155,10 +154,7 @@ namespace Kodmine
                   name: "areas",
                   template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
                 );
-            });
 
-            app.UseMvc(routes =>
-            {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
