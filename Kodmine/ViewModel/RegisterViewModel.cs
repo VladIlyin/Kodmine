@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Kodmine.ViewModel
 {
-    public class Role
+    public class RegisterViewModel
     {
         [Required]
         [EmailAddress]
