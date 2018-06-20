@@ -6,15 +6,19 @@
     <ApplicationIcon>wwwroot\favicon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Areas\Admin\Data\**" />
     <Compile Remove="Data\Migrations\**" />
     <Compile Remove="Middleware\**" />
     <Compile Remove="Pages\**" />
+    <Content Remove="Areas\Admin\Data\**" />
     <Content Remove="Data\Migrations\**" />
     <Content Remove="Middleware\**" />
     <Content Remove="Pages\**" />
+    <EmbeddedResource Remove="Areas\Admin\Data\**" />
     <EmbeddedResource Remove="Data\Migrations\**" />
     <EmbeddedResource Remove="Middleware\**" />
     <EmbeddedResource Remove="Pages\**" />
+    <None Remove="Areas\Admin\Data\**" />
     <None Remove="Data\Migrations\**" />
     <None Remove="Middleware\**" />
     <None Remove="Pages\**" />
@@ -64,7 +68,6 @@
     <ProjectReference Include="..\Kodmine.Model\Kodmine.Model.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Data\" />
     <Folder Include="wwwroot\images_post\" />
   </ItemGroup>

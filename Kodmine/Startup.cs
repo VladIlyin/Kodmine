@@ -64,7 +64,7 @@ namespace Kodmine
             {
                 // Cookie settings
                 options.Cookie.HttpOnly = true;
-                options.ExpireTimeSpan = TimeSpan.FromDays(10);
+                //options.ExpireTimeSpan = TimeSpan.FromDays(10);
                 // If the LoginPath isn't set, ASP.NET Core defaults 
                 // the path to /Account/Login.
                 options.LoginPath = "/Account/Login";
@@ -89,8 +89,8 @@ namespace Kodmine
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("PostPolicy", policy => policy.RequireRole("administrator"));
-                options.AddPolicy("AdminPolicy", policy => policy.RequireRole("administrator"));
+                options.AddPolicy("PostPolicy", policy => policy.RequireRole("Administrator"));
+                options.AddPolicy("AdminPolicy", policy => policy.RequireRole("Administrator"));
             });
 
             //services.AddSession();

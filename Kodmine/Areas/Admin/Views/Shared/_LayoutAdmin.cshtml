@@ -59,8 +59,8 @@
         <div class="navbar-collapse collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav mr-4">
                 <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Post" asp-action="Index">Посты</a></li>
-                <li class="nav-item"><a class="nav-link" asp-controller="Tag" asp-action="Index">Теги</a></li>
-                <li class="nav-item"><a class="nav-link" asp-controller="Rubric" asp-action="Index">Рубрики</a></li>
+                <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Tag" asp-action="Index">Теги</a></li>
+                <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Rubric" asp-action="Index">Рубрики</a></li>
             </ul>
             @await Html.PartialAsync("_LoginPartialAdmin")
         </div>
