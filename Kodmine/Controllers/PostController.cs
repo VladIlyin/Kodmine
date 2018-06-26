@@ -162,6 +162,7 @@ namespace Kodmine.Controllers
             return Json(true);
         }
 
+        [AllowAnonymous]
         public ActionResult ViewPost(int id)
         {
             var post = repository.GetById(id);
