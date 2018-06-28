@@ -59,6 +59,9 @@
         document.getElementById("clean-btn").onclick = function (event) {
             var send = { text: $("#view-render").html()}
             $.post('@Url.Action("CleanContent", "Post")', send, function (data) {
+                if (data === "null")
+                    return;
+
                 $("#view-render").html(data)
              })
         }

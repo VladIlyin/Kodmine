@@ -171,6 +171,9 @@ namespace Kodmine.Controllers
 
         public ActionResult CleanContent(string text)
         {
+            if (text == null)
+               return Json(null);
+
             foreach (var item in SettingsHelper.GetHtmlCleanerRegex(configuration))
             {
                 text = Regex.Replace(text, item.Key, item.Value);

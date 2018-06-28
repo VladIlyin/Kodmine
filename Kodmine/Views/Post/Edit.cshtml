@@ -103,8 +103,7 @@
                         </span>
                     </div>
                     <br />
-                    @*<div id="view-render">@Html.Raw(Model.Content)</div>*@
-                    <a href="@Url.Action("CleanContent", "Post", new { text = "" })" data-ajax="true" data-ajax-mode="replace" data-ajax-failure="showError" data-ajax-update="#post_addr_form" id="pa_load_form">Очистить</a>
+                    @*<a href="@Url.Action("CleanContent", "Post", new { text = "" })" data-ajax="true" data-ajax-mode="replace" data-ajax-failure="showError" data-ajax-update="#post_addr_form" id="pa_load_form">Очистить</a>*@
                     <div id="post_addr_form"></div>
                     <div id="view-render" style="padding:5px;" contentEditable="true" onkeydown="saveFromRenderEditor(event);">@Html.Raw(Model.Content)</div>
                     <div id="view-html" style="display:none;">
