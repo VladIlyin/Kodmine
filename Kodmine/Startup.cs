@@ -18,11 +18,27 @@ namespace Kodmine
         public static IServiceProvider ServiceMan { get; private set; }
         public IConfiguration Configuration { get; }
 
-        public Startup(IConfiguration configuration)
+        public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json");
+            .SetBasePath(env.ContentRootPath)
+            .AddEnvironmentVariables();
+
+            if (env.IsDevelopment())
+            {
+                builder.AddUserSecrets<Startup>()
+                    .AddJsonFile($"appsettings.{env.EnvironmentName}.json",
+                            optional: false,
+                            reloadOnChange: true);
+            }
+            else
+            {
+                builder
+                    .AddJsonFile("appsettings.Development.json")
+                    .AddJsonFile($"appsettings.json",
+                        optional: false,
+                        reloadOnChange: true);
+            }
 
             Configuration = builder.Build();
         }
