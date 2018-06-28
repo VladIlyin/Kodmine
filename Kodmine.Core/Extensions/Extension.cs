@@ -14,6 +14,9 @@ namespace Kodmine.Core.Extensions
 
         public static string TakePostTeaser(this string str)
         {
+            if (str == null)
+                return null;
+            
             var match = Regex.Match(str, @"<span.+class=.+post-teaser.+<\/span>");
             
             if (match.Success)
