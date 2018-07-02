@@ -19,8 +19,8 @@ namespace Kodmine.Controllers.Base
 
         public virtual ActionResult Index()
         {
-            var posts = repository.Get();
-            return View(posts);
+            var model = repository.Get();
+            return View(model);
         }
 
         public virtual ActionResult Create()
@@ -65,26 +65,40 @@ namespace Kodmine.Controllers.Base
             }
         }
 
-        public virtual ActionResult Delete(int id)
+        public virtual ActionResult Delete(int id, string returnUrl = null)
         {
+            ViewData["ReturnUrl"] = returnUrl;
+
             var model = repository.GetById(id);
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual ActionResult Delete(int id, T collection)
+        public virtual IActionResult Delete(int id, T collection, string returnUrl)
         {
             //try
             //{
                 repository.Delete(id);
-                return RedirectToAction(nameof(Index));
+                return RedirectToLocal(returnUrl);
             //}
             //catch (Exception ex)
             //{
             //    //throw ex;
             //    //return View("~/Views/Error/Index.cshtml");
             //}
+        }
+
+        protected virtual IActionResult RedirectToLocal(string returnUrl)
+        {
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
 
     }

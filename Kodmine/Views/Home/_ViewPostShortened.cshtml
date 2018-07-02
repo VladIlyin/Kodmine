@@ -22,13 +22,16 @@
         <br />
     }
 
-    <div class="post-content-shortened">
-        @Html.Raw(Model.Content.TakePostTeaser())...
-        <a asp-action="ViewPost" asp-controller="Post" asp-route-id="@Model.PostId">Читать</a>
-        @if (ViewBag.CanEditPost ?? false)
-        {
-            <a asp-action="Edit" asp-controller="Post" asp-route-id="@Model.PostId"> Редактировать</a>
-        }
-    </div>
+        <div class="post-content-shortened">
+            @Html.Raw(Model.Content.TakePostTeaser())...
+            <a asp-action="ViewPost" asp-controller="Post" asp-route-id="@Model.PostId">Читать</a>
+            @if (ViewBag.CanEditPost ?? false)
+            {
+                @: |
+                <a asp-action="Edit" asp-controller="Post" asp-route-id="@Model.PostId"> Редактировать</a>
+                @: |
+                <a asp-action="Delete" asp-controller="Post" asp-route-id="@Model.PostId" asp-route-returnUrl = "@Url.Action("Index", "Home")" > Удалить</a>
+            }
+        </div>
 </div>
 <hr />

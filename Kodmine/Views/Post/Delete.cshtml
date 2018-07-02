@@ -22,7 +22,7 @@
         </dd>
     </dl>
 
-    <form asp-action="Delete" method="post">
+    <form asp-action="Delete" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
         <input type="hidden" asp-for="PostId" />
         <input type="submit" value="Удалить" class="btn btn-primary" />
         <a asp-action="Index" class="btn btn-secondary"><i class="icon-plus"></i> <span>Отмена</span></a>

@@ -190,6 +190,18 @@ namespace Kodmine.Controllers
                     ext == ".bmp";
         }
 
+        protected override IActionResult RedirectToLocal(string returnUrl)
+        {
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+            else
+            {
+                return RedirectToAction(nameof(PostController.Index), "Post", new { area = "" });
+            }
+        }
+
         //[Authorize(Policy = "PostEditPolicy")]
         //public override ActionResult Delete(int id)
         //{
