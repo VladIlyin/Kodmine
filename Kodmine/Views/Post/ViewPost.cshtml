@@ -2,7 +2,7 @@
 @inject IAuthorizationService AuthorizationService
 @model Kodmine.Model.Models.Post
 
-<h2>@Model.Title</h2>
+<h1>@Model.Title</h1>
 <p>
     @Model.CreateDate.ToShortDateString() |
     @foreach (var postTags in Model.PostTags)
@@ -16,4 +16,6 @@
     }
 </p>
 <br />
-@Html.Raw(Model.Content)
+<article class="post-view">
+    @Html.Raw(Model.Content)
+</article>
