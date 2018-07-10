@@ -2,20 +2,22 @@
 @inject IAuthorizationService AuthorizationService
 @model Kodmine.Model.Models.Post
 
-<h1>@Model.Title</h1>
-<p>
-    @Model.CreateDate.ToShortDateString() |
-    @foreach (var postTags in Model.PostTags)
-    {
-        <i>@postTags.Tag.Name</i>
-    } |
+<div class="post-view">
+    <h1 class="post-view-title">@Model.Title</h1>
+    <p>
+        @Model.CreateDate.ToShortDateString() |
+        @foreach (var postTags in Model.PostTags)
+        {
+            <i>@postTags.Tag.Name</i>
+        } |
 
-    @if ((await AuthorizationService.AuthorizeAsync(User, "PostPolicy")).Succeeded)
-    {
-        <a asp-action="Edit" asp-controller="Post" asp-route-id="@Model.PostId"> Редактировать</a>
-    }
-</p>
-<br />
-<article class="post-view">
-    @Html.Raw(Model.Content)
-</article>
+        @if ((await AuthorizationService.AuthorizeAsync(User, "PostPolicy")).Succeeded)
+        {
+            <a asp-action="Edit" asp-controller="Post" asp-route-id="@Model.PostId"> Редактировать</a>
+        }
+    </p>
+    <br />
+    <article>
+        @Html.Raw(Model.Content)
+    </article>
+</div>
