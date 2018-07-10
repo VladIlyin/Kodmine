@@ -68,30 +68,21 @@
             }
         }
     }
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar sticky-top navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
         <a class="navbar-brand" asp-controller="Home" asp-action="Index">Kodmine</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="#navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="navbar-collapse collapse justify-content-end" id="navbarNav">
-            <ul class="navbar-nav mr-4">
-                @if ((await AuthorizationService.AuthorizeAsync(User, "PostPolicy")).Succeeded)
-                {
-                    <li class="nav-item"><a class="nav-link" href="/admin">Админка</a></li>
-                }
-                @*<li class="nav-item"><a class="nav-link" asp-controller="Tag" asp-action="Index">Теги</a></li>
-                    <li class="nav-item"><a class="nav-link" asp-controller="Rubric" asp-action="Index">Рубрики</a></li>*@
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                @Html.Partial("_Rubric", rubList)
+                @Html.Partial("_LoginPartial")
             </ul>
-            @*@await Html.PartialAsync("_LoginPartial")*@
         </div>
     </nav>
     <div class="main-content">
         <div class="row">
             <div class="col-2">
-                @if (rubList != null)
-                {
-                    @Html.Partial("_Rubric", rubList)
-                }
             </div>
             <div class="col-9">
                 @RenderBody()
