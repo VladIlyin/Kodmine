@@ -18,7 +18,8 @@
             <th scope="col">#</th>
             <th scope="col">Заголовок</th>
             <th scope="col">Дата</th>
-            <th scope="col">Тэги</th>
+            <th scope="col">Рубрика</th>
+            <th scope="col">Теги</th>
             <th scope="col">Действие</th>
         </tr>
     </thead>
@@ -32,6 +33,9 @@
         </td>
         <td>
             @item.CreateDate.ToShortDateString()
+        </td>
+        <td>
+            @item.Rubric.Name
         </td>
         <td>
             @foreach (var postTags in item.PostTags)
