@@ -13,7 +13,7 @@
 <form asp-action="Edit">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input type="hidden" asp-for="PostId" />
-    <input type="hidden" asp-for="RubricId" />
+    @*<input type="hidden" asp-for="RubricId" />*@
     <div class="row">
         <div class="col-md-7">
             <div class="form-group">
@@ -36,24 +36,10 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label class="control-label">Рубрика</label>
-                <select id="select-topic-list" class="form-control" onchange="onSelectTopic(this);">
+                <select asp-for="RubricId" asp-items="ViewBag.rubListViewModel" id="select-topic-list" class="form-control">
                     <option id="0" hidden disabled selected> -- Выберите рубрику -- </option>
-                    @{
-
-                        foreach (TopicViewModel topic in (ViewBag.rubListViewModel ?? new List<TopicViewModel>()))
-                        {
-                            if (topic.Selected)
-                            {
-                                <option id="@topic.Id" value="@topic.Name" selected>@topic.Name</option>
-                            }
-                            else
-                            {
-                                <option id="@topic.Id" value="@topic.Name">@topic.Name</option>
-                            }
-                        }
-                    }
                 </select>
-
+                <span asp-validation-for="RubricId" class="text-danger"></span>
             </div>
         </div>
     </div>
@@ -75,47 +61,53 @@
         </div>
     </div>
     @*------------------------------------------------------------*@
-        <div class="row">
-            <div class="col-md-10">
-                <div class="form-group" id="content-group">
-                    <label asp-for="Content" class="control-label"></label>
-                    <div>
-                        <a href="#" onclick="savePostContent()">
-                            <span class="glyphicon glyphicon-floppy-save"></span>
-                        </a>
-                        <button type="button" id="mode-btn" class="btn"><></button>
-                        <span id="btn-group-edit">
-                            <button type="button" id="p-btn" class="btn">P</button>
-                            <button type="button" id="h1-btn" class="btn">H1</button>
-                            <button type="button" id="h2-btn" class="btn">H2</button>
-                            <button type="button" id="h3-btn" class="btn">H3</button>
-                            <button type="button" id="h4-btn" class="btn">H4</button>
-                            <button type="button" id="bold-btn" class="btn">B</button>
-                            <button id="italic-btn" class="btn">I</button>
-                            <button type="button" id="code-btn" class="btn">Code</button>
-                            <button type="button" id="code-block-btn" class="btn">CodeBlock</button>
-                            <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal">
-                                Image
-                            </button>
-                            <button type="button" id="encode-btn" class="btn">Encode</button>
-                            <button type="button" id="readmore-btn" class="btn">RM</button>
-                            <button type="button" id="clean-btn" class="btn">Clean</button>
-                        </span>
-                    </div>
-                    <br />
-                    @*<a href="@Url.Action("CleanContent", "Post", new { text = "" })" data-ajax="true" data-ajax-mode="replace" data-ajax-failure="showError" data-ajax-update="#post_addr_form" id="pa_load_form">Очистить</a>*@
-                    <div id="post_addr_form"></div>
-                    <div id="view-render" style="padding:5px;" contentEditable="true" onkeydown="saveFromRenderEditor(event);">@Html.Raw(Model.Content)</div>
-                    <div id="view-html" style="display:none;">
-                        <textarea name="Content" id="Content" class="form-control" rows="20" style="background-color:black;color:white;border: 1px solid #ccc;padding: 5px;" onkeydown="saveFromHtmlEditor(event);">@Model.Content</textarea>
-                    </div>
-                    <span asp-validation-for="Content" class="text-danger"></span>
+    @*Контент*@
+    @*------------------------------------------------------------*@
+    <div class="row">
+        <div class="col-md-10">
+            <div class="form-group" id="content-group">
+                <label asp-for="Content" class="control-label"></label>
+                <div>
+                    <a href="#" onclick="savePostContent()">
+                        <span class="glyphicon glyphicon-floppy-save"></span>
+                    </a>
+                    <button type="button" id="mode-btn" class="btn"><></button>
+                    <span id="btn-group-edit">
+                        <button type="button" id="p-btn" class="btn">P</button>
+                        <button type="button" id="h1-btn" class="btn">H1</button>
+                        <button type="button" id="h2-btn" class="btn">H2</button>
+                        <button type="button" id="h3-btn" class="btn">H3</button>
+                        <button type="button" id="h4-btn" class="btn">H4</button>
+                        <button type="button" id="bold-btn" class="btn">B</button>
+                        <button id="italic-btn" class="btn">I</button>
+                        <button type="button" id="code-btn" class="btn">Code</button>
+                        <button type="button" id="code-block-btn" class="btn">CodeBlock</button>
+                        <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal">
+                            Image
+                        </button>
+                        <button type="button" id="encode-btn" class="btn">Encode</button>
+                        <button type="button" id="readmore-btn" class="btn">RM</button>
+                        <button type="button" id="clean-btn" class="btn">Clean</button>
+                    </span>
                 </div>
-                <div class="form-group">
-                    <input type="submit" value="Сохранить" class="btn btn-default" />
+                <br />
+                @*<a href="@Url.Action("CleanContent", "Post", new { text = "" })" data-ajax="true" data-ajax-mode="replace" data-ajax-failure="showError" data-ajax-update="#post_addr_form" id="pa_load_form">Очистить</a>*@
+                <div id="post_addr_form"></div>
+                <div id="view-render" style="padding:5px;" contentEditable="true" onkeydown="saveFromRenderEditor(event);">@Html.Raw(Model.Content)</div>
+                <div id="view-html" style="display:none;">
+                    <textarea name="Content" id="Content" class="form-control" rows="20" style="background-color:black;color:white;border: 1px solid #ccc;padding: 5px;" onkeydown="saveFromHtmlEditor(event);">@Model.Content</textarea>
                 </div>
+                <span asp-validation-for="Content" class="text-danger"></span>
             </div>
         </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
 </form>
 
 @*<a href="@Url.Action("SaveContent", "Post", new { content = "123", id = "14" })" data-ajax="true" data-ajax-mode="replace" data-ajax-failure="showError" data-ajax-update="#post_addr_form" id="pa_load_form">Cecwecw</a>

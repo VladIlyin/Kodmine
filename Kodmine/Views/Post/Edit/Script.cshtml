@@ -277,7 +277,7 @@
 
     function onSelectTopic(elem) {
 
-        var data = { postId: @Model.PostId, topicId: $(elem).children(":selected").attr("id") }
+        var data = { postId: @Model.PostId, topicId: $(elem).children(":selected").attr("value") }
 
         $.post("@Url.Action("SetTopic")", data, function (data, status, jqXHR) {
 

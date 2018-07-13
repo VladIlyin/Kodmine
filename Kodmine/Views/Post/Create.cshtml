@@ -42,7 +42,7 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label class="control-label">Рубрика</label>
-                <select asp-for="RubricId" asp-items="ViewBag.rubListViewModel" id="select-topic-list" class="form-control" onchange="onSelectTopic(this);">
+                <select asp-for="RubricId" asp-items="ViewBag.rubListViewModel" id="select-topic-list" class="form-control">
                     <option id="0" hidden disabled selected> -- Выберите рубрику -- </option>
                 </select>
                 <span asp-validation-for="RubricId" class="text-danger"></span>
